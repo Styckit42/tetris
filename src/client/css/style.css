@@ -1,0 +1,16 @@
+.board {
+    display: flex;
+    flex-flow: row wrap;
+    height: 400px;
+    width: 200px;
+    background-color: black;
+}
+
+.brick {
+    flex: 0 0 auto;
+    height: 18px;
+    width: 18px;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+}
