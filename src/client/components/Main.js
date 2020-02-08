@@ -12,8 +12,6 @@ const Main = ({inMenu, savePiece}) => {
     )
   }
   else {
-    const piece = generatePiece();
-    savePiece(piece);
     return (
       <div><Board/></div>
     )
@@ -26,12 +24,12 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		savePiece: piece => {
-			dispatch(savePieceAction(piece))
-    },
-  };
-};
+export default connect(mapStateToProps, null)(Main)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main)
+/**
+ * Main component
+ * param : -inMenu (boolean)
+ *         -savePiece (redux function)
+ * return : Menu or Board component (depend of inMenu value)
+ * 
+ */

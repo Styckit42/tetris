@@ -38,3 +38,10 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu)
+
+/**
+ * Menu
+ * Menu component, to display the game menu
+ * param : -inMenu (boolean)
+ *         -saveInMenu (redux function) 
+ */

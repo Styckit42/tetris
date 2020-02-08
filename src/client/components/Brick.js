@@ -14,3 +14,9 @@ const Brick = ({ x, y, color }) => {
 }
 
 export default Brick;
+
+/**
+ * Brick
+ * brick component, child of Piece
+ * param : destructured object
+ */

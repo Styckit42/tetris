@@ -1,35 +1,34 @@
 import {I, O, T, S, Z, L, J, BRICKS_I, BRICKS_O, BRICKS_T, BRICKS_S, BRICKS_Z, BRICKS_L, BRICKS_J} from '../constants/piecesConstants.js'
 import { STATE_0 } from '../constants/rotateConstants.js';
 
-export const generatePiece = () => {
-  const pieceToCreate = getRandomInt(7);
+export const generatePiece = (pieceToCreate) => {
   let newPiece = [];
   switch (pieceToCreate) {
-    case 0:
+    case I:
       newPiece = generateI();
       return newPiece;
       break;
-    case 1:
+    case O:
       newPiece = generateO();
       return newPiece;
       break;
-    case 2:
+    case T:
       newPiece = generateT();
       return newPiece;
       break;
-    case 3:
+    case S:
       newPiece = generateS();
       return newPiece;
       break;
-    case 4:
+    case Z:
       newPiece = generateZ();
       return newPiece;
       break;
-    case 5:
+    case L:
       newPiece = generateL();
       return newPiece;
       break;
-    case 6:
+    case J:
       newPiece = generateJ();
       return newPiece;
       break;
@@ -37,7 +36,26 @@ export const generatePiece = () => {
       break;
   }
 };
-  
+
+export const generateBag = () => {
+  let bag = [I, O, T, S, Z, L, J];
+  bag = shuffle(bag);
+  console.log(bag)
+  return(bag)
+}
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
+}
+
 const getRandomInt= (max) => {
     return Math.floor(Math.random() * Math.floor(max));	
 };

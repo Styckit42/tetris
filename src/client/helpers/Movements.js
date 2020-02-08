@@ -3,7 +3,7 @@ import {COLLISION_STACK, COLLISION_WALL, COLLISION_GAMEOVER, NO_COLLISION} from 
 import _ from 'lodash'
 
 const spaceMove = (piece, stack) => {
-  while (collisionTest(piece, stack, 10, 20, SPACE) === NO_COLLISION) {
+  while (collisionTest(piece, stack, 9, 19, SPACE) === NO_COLLISION) {
     console.log(true)
     piece.map(
       brick => {
@@ -12,7 +12,6 @@ const spaceMove = (piece, stack) => {
       }
     )
   }
-  console.log(piece)
   return piece
 }
 
@@ -68,10 +67,6 @@ const gameOverCheck = (piece, stack) => {
 }
 
 export const collisionTest = (piece, stack, width, height, keyCode) => {
-  /*if (pieceTmp.hasBennPlayed === false && gameOverCheck(pieceTmp, stack) === true) {
-    return COLLISION_GAMEOVER;
-  }*/
-  console.log(piece.length)
   for (let i = 0; i < piece.length; i++) {
     let brick = piece[i];
     const find = stack.find(

@@ -8,40 +8,35 @@ import App from './containers/app';
 import {alert} from './actions/alert';
 import Main from './components/Main.js';
 import Style from './css/style.css';
-import {generatePiece} from './helpers/PieceGenerations.js'
+import {generatePiece, generateBag} from './helpers/PieceGenerations.js'
 
 //redux
 import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux'                                                                            
+import { Provider } from 'react-redux';
 
-//const firstPiece = generatePiece();
+const bag = generateBag();
+const piece = generatePiece(bag[0])
+bag.shift();
 
 const initialState = {
- //piece: firstPiece,
-  piece: [],
   stack: [],
   inMenu: true,
   inOptions: false,
-  /*activeItem: '',
-  activeItemPosition: 0,
-  activeItemColor: '',
-  menuItems: [
-    { text: 'Home' },
-    { text: 'Gallery' },
-    { text: 'About' },
-    { text: 'Blog' },
-    { text: 'Contact' },
-  ],*/
+  score: 0,
+  levels: 1,
+  linesErased: 0,
+  piece,
+  bag
 };
 
 const store = createStore(
   reducer,
   initialState,
   applyMiddleware(thunk, createLogger())
-);
-
-ReactDom.render((
-  <div>
+  );
+  
+  ReactDom.render((
+    <div>
     <Provider store={store}>
       <Main/>
     </Provider>

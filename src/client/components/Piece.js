@@ -10,6 +10,7 @@ const Piece = ({ bricks }) => {
       return (<Brick x={x} y={y} color={color} key={order}/>);
     }
   );
+  console.log(typeof(piece))
   return (
     <React.Fragment>
       {piece}
@@ -18,3 +19,10 @@ const Piece = ({ bricks }) => {
 }
 
 export default Piece;
+
+/**
+ * Piece
+ * Piece component, child of Board, parent of Brick
+ * param : bricks (object)
+ * return : piece
+ */
