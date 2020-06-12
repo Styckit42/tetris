@@ -1,0 +1,58 @@
+.board {
+    display: flex;
+    flex-flow: row wrap;
+    height: 400px;
+    width: 200px;
+    background-color: black;
+}
+
+.board-NextPiece {
+    display: flex;
+    flex-flow: row wrap;
+    height: 80px;
+    width: 120px;
+    background-color: black;
+}
+
+.brick {
+    flex: 0 0 auto;
+    height: 18px;
+    width: 18px;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+}
+
+button {
+    background: none;
+    border: 0;
+    color: inherit;
+    /* cursor: default; /
+    font: inherit;
+    line-height: normal;
+    overflow: visible;
+    padding: 0;
+    -webkit-appearance: button; / for input /
+    -webkit-user-select: none; / for button */
+       -moz-user-select: none;
+        -ms-user-select: none;
+        width: 30%;
+    margin-left: 35%;
+    height: 40px;
+    text-align: center;
+    border-style: solid;
+    border-width: 2px;
+    margin-top: 20px;
+    line-height: 36px;
+}
+
+.button-style {
+    width: 30%;
+    margin-left: 35%;
+    height: 40px;
+    text-align: center;
+    border-style: solid;
+    border-width: 2px;
+    margin-top: 20px;
+    line-height: 36px;
+}
