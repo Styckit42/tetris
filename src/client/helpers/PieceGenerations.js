@@ -59,25 +59,6 @@ const generateJ = () => (
   }
 );
 
-function shuffle(array) {
-  let currentIndex = array.length; let temporaryValue; let
-    randomIndex;
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  return array;
-}
-
-export const generateBag = () => {
-  let bag = [I, O, T, S, Z, L, J];
-  bag = shuffle(bag);
-  return (bag);
-};
-
 export const generatePiece = (pieceToCreate) => {
   let newPiece = [];
   switch (pieceToCreate) {

@@ -1,0 +1,4 @@
+ligne 50 et 54 dans Board, changer le bag
+54 dans un socketON
+
+handleEvents ligne 44 transformer en emit vers serveur

@@ -3,15 +3,23 @@ import { connect } from 'react-redux';
 import functional from 'react-functional';
 import Piece from './Piece';
 import Score from './Score';
+import styled from 'styled-components';
 import { DOWN } from '../constants/keyBoardConstants';
 import {
-  savePieceAction, saveBagAction, saveStackAction, saveSpeedAction, saveGameStateAction,
+  savePieceAction, saveStackAction, saveSpeedAction, saveGameStateAction,
   saveScoreAction, saveLevelsAction, saveLinesErasedAction, saveHasToFallAction, resetStateAction,
 } from '../actions/save';
-import { generatePiece, generateBag } from '../helpers/PieceGenerations';
 import handleOnKeyDown from '../helpers/HandleEvents';
 import { generateBoard, filterBoard } from '../helpers/BoardGeneration';
 import tetrisMusic from '../sounds/tetris-theme.mp3';
+
+const StyledBoard = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  height: 400px;
+  width: 200px;
+  background-color: black;
+`;
 
 const width = 10;
 const height = 20;
@@ -24,18 +32,19 @@ const Board = (props) => {
   } = props;
   sound.volume = volume;
   sound.play();
-  if (piece === null) {
-    return null;
+  let test = [];
+  if (piece !== null) {
+    test = piece.bricks;
   }
   const board = generateBoard(width, height);
-  const boardFiltered = filterBoard(board, piece.bricks, stack);
+  const boardFiltered = filterBoard(board, test, stack);
   return (
     <div role="button" tabIndex="0" onKeyDown={(e) => { handleOnKeyDown(e, props, width, height); }}>
-      <div className="board">
+      <StyledBoard>
         <Piece bricks={boardFiltered} />
-        <Piece bricks={piece.bricks} />
+        <Piece bricks={test} />
         <Piece bricks={stack} />
-      </div>
+      </StyledBoard>
       <div className="boxScore">
         <Score />
       </div>
@@ -47,11 +56,7 @@ let myTimeout = null;
 let mySpeed = 1000;
 
 Board.componentDidMount = (props) => {
-  const bag = generateBag();
-  const piece = generatePiece(bag[0]);
-  bag.shift();
-  props.savePiece(piece);
-  props.saveBag(bag);
+  
   myTimeout = setInterval(() => { props.saveHasToFall(true); }, props.speed);
 };
 
@@ -78,7 +83,6 @@ const mapStateToProps = (state) => ({
   score: state.score,
   levels: state.levels,
   linesErased: state.linesErased,
-  bag: state.bag,
   speed: state.speed,
   hasToFall: state.hasToFall,
   volume: state.volume,
@@ -102,9 +106,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   saveLinesErased: (linesErasedInCurrentLevel) => {
     dispatch(saveLinesErasedAction(linesErasedInCurrentLevel));
-  },
-  saveBag: (bag) => {
-    dispatch(saveBagAction(bag));
   },
   saveHasToFall: (hasToFall) => {
     dispatch(saveHasToFallAction(hasToFall));

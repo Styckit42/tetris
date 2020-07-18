@@ -13,7 +13,7 @@ export const isStackHigh = (stack) => {
 
 export const gameOverCheck = (bricks) => {
   for (let i = 0; i < bricks.length; i += 1) {
-    if (bricks[i].y < 0) {
+    if (bricks[i].y <=  0) {
       return true;
     }
   }

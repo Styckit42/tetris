@@ -6,6 +6,9 @@ export default class Game {
     this.admin = null;
     this.playerList = [];
   }
+  getId() {
+    return this.id;
+  }
   setStartFlag(startFlag) {
     this.startFlag = startFlag;
     return this;
@@ -33,20 +36,20 @@ export default class Game {
   addPlayer(player) {
     if (this.playerList.length === 0) {
       player.setAdmin(true);
+      this.setAdmin(player);
     }
     this.playerList.push(player);
     return this;
   }
-  removePlayer(playerToRemove) {
-    this.playerList.filter(player => player.id !== playerToRemove.id);
-    if (playerToRemove.getAdmin() === true && this.playerList.length > 0) {
+  removePlayer(playerToRemoveId) {
+    console.log(playerToRemoveId);
+    this.playerList = this.playerList.filter(player => player.id !== playerToRemoveId);
+    console.log(this.playerList);
+    if (this.admin.id === playerToRemoveId && this.playerList.length > 0) {
+      console.log('wesh maggle');
       this.playerList[0].setAdmin(true);
+      this.setAdmin(this.playerList[0]);
     }
     return this;
   }
-  /* id
-  playersList
-  startFlag
-  bag
-  admin */
 }

@@ -1,22 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import styled from 'styled-components';
 import { generateBoard, filterBoard } from '../helpers/BoardGeneration';
 import Piece from './Piece';
 import { generatePiece } from '../helpers/PieceGenerations';
+
+const StyledBoardNextPiece = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  height: 80px;
+  width: 120px;
+  background-color: black;
+`;
 
 const width = 6;
 const height = 4;
 
 const NextPiece = (props) => {
   const {
-    bag,
+    nextPiece,
   } = props;
-  if (bag === null) {
+  if (nextPiece === null) {
     return null;
   }
-  const piece = generatePiece(bag[0]);
-  const pieceTmp = _.cloneDeep(piece);
+  const pieceTmp = _.cloneDeep(nextPiece);
   pieceTmp.bricks.map(
     (brick) => {
       brick.x -= 2;
@@ -27,15 +35,15 @@ const NextPiece = (props) => {
   const board = generateBoard(width, height);
   const boardFiltered = filterBoard(board, pieceTmp.bricks, []);
   return (
-    <div className="board-NextPiece">
+    <StyledBoardNextPiece>
       <Piece bricks={boardFiltered} />
       <Piece bricks={pieceTmp.bricks} />
-    </div>
+    </StyledBoardNextPiece>
   );
 };
 
 const mapStateToProps = (state) => ({
-  bag: state.bag,
+  nextPiece: state.nextPiece,
 });
 
 export default connect(mapStateToProps, null)(NextPiece);

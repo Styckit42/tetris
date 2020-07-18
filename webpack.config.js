@@ -3,7 +3,7 @@ var path = require('path');
 module.exports = {
   entry: {
     clientApp : './src/client/index.jsx',
-    servApp : './src/server/index.js'
+    // servApp : './src/server/index.js'
   },
 
   resolve: {
@@ -14,6 +14,8 @@ module.exports = {
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js'
   },
+
+  externals: ["fs"],
 
   module: {
     loaders: [{

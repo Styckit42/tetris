@@ -1,10 +1,12 @@
 export default class Player {
   constructor(id) {
     this.id = id;
+    this.name = '';
     this.score = 0;
     this.level = 1;
-    this.spectre = null;
+    this.stack = null;
     this.admin = false;
+    this.bagIndex = 0;
   }
   setName(name) {
     this.name = name;
@@ -12,6 +14,9 @@ export default class Player {
   }
   getName() {
     return this.name;
+  }
+  getBagIndex() {
+    return this.bagIndex;
   }
   setScore(score) {
     this.score = score;
@@ -27,12 +32,12 @@ export default class Player {
   getLevel() {
     return this.level;
   }
-  setSpectre(spectre) {
-    this.spectre = spectre;
+  setStack(stack) {
+    this.stack = stack;
     return this;
   }
-  getSpectre() {
-    return this.spectre;
+  getStack() {
+    return this.stack;
   }
   setAdmin(admin) {
     this.admin = admin;

@@ -1,6 +1,7 @@
 import {
   SAVE_PIECE, SAVE_STACK, SAVE_GAME_STATE, SAVE_SCORE, SAVE_SPEED, SAVE_VOLUME,
-  SAVE_LEVELS, SAVE_LINES_ERASED, SAVE_BAG, SAVE_HAS_TO_FALL, RESET_STATE,
+  SAVE_LEVELS, SAVE_LINES_ERASED, SAVE_NEXT_PIECE, SAVE_HAS_TO_FALL, RESET_STATE, SAVE_IS_ADMIN,
+  SAVE_OPPONENT_LIST,
 } from '../constants/saveConstants';
 
 export const savePieceAction = (piece) => ({
@@ -33,9 +34,9 @@ export const saveLinesErasedAction = (linesErased) => ({
   linesErased,
 });
 
-export const saveBagAction = (bag) => ({
-  type: SAVE_BAG,
-  bag,
+export const saveNextPieceAction = (nextPiece) => ({
+  type: SAVE_NEXT_PIECE,
+  nextPiece,
 });
 
 export const saveHasToFallAction = (hasToFall) => ({
@@ -56,4 +57,14 @@ export const saveSpeedAction = (speed) => ({
 export const saveVolumeAction = (volume) => ({
   type: SAVE_VOLUME,
   volume,
+});
+
+export const saveIsAdminAction = (isAdmin) => ({
+  type: SAVE_IS_ADMIN,
+  isAdmin,
+});
+
+export const saveOpponentListAction = (player) => ({
+  type: SAVE_OPPONENT_LIST,
+  player,
 });

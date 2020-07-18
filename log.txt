@@ -1,0 +1,9 @@
+
+> red_tetrisboilerplate@0.0.1 srv-dev F:\projet\red_tetris_boilerplate
+> babel-watch -w src src/server/index.js
+
+>>> RESTARTING <<<
+listening on *:3000
+a user connected
+a user connected
+a user connected
