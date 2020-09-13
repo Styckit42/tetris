@@ -1,25 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import { calculateOrder } from '../helpers/Movements';
+import MovementsFuncs from '../helpers/Movements';
 
-const StyledBrick = styled.div`
+const Brick = styled.div`
   flex: 0 0 auto;
   height: 18px;
   width: 18px;
   border-style: solid;
-  border-color: white;
+  border-color: ${ props => props.brick.isSpectre ? 'none' : 'rgba(255, 255, 255, 0.5)' };
   border-width: 1px;
+  order: ${ props => MovementsFuncs.calculateOrder(props.brick.x, props.brick.y) };
+  background-color: ${ props => props.brick.color }
 `;
-
-const Brick = ({ x, y, color }) => {
-  const orderItem = calculateOrder(x, y);
-  const style = {
-    order: orderItem,
-    backgroundColor: color,
-  };
-  return (
-    <StyledBrick style={style} />
-  );
-};
 
 export default Brick;

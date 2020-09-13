@@ -1,6 +1,16 @@
 import React from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Spectre from './Spectre';
+
+const StyledSpectres = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: scale(0.3);
+  display: flex;
+  flex-wrap: wrap;
+`;
 
 const SpectreList = (props) => {
   const { opponentList } = props;
@@ -11,9 +21,9 @@ const SpectreList = (props) => {
     },
   );
   return (
-    <React.Fragment>
+    <StyledSpectres>
       {spectre}
-    </React.Fragment>
+    </StyledSpectres>
   );
 };
 

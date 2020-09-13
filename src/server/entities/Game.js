@@ -42,11 +42,8 @@ export default class Game {
     return this;
   }
   removePlayer(playerToRemoveId) {
-    console.log(playerToRemoveId);
     this.playerList = this.playerList.filter(player => player.id !== playerToRemoveId);
-    console.log(this.playerList);
     if (this.admin.id === playerToRemoveId && this.playerList.length > 0) {
-      console.log('wesh maggle');
       this.playerList[0].setAdmin(true);
       this.setAdmin(this.playerList[0]);
     }

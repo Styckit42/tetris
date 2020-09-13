@@ -1,4 +1,42 @@
 import _ from 'lodash';
+import { giveLinesToOpponents } from './SocketEmit';
+
+const fillYToCheck = (bricks) => {
+  const tab = [];
+  bricks.forEach((brick) => {
+    if (!tab.includes(brick.y)) {
+      tab.push(brick.y);
+    }
+  });
+  return tab;
+};
+
+const fillYErased = (yToCheck, stack) => {
+  const tab = [];
+  for (let i = 0; i < yToCheck.length; i++) {
+    const bricksEraseCheck = [];
+    stack.forEach((brick) => {
+      if (brick.y === yToCheck[i] && !bricksEraseCheck.includes(brick.x)) {
+        bricksEraseCheck.push(brick.x);
+      }
+    });
+    if (bricksEraseCheck.length === 10) {
+      tab.push(yToCheck[i]);
+    }
+  }
+  return tab;
+};
+
+const calculateNewStack = (stack, yErased) => {
+  let newStack = _.cloneDeep(stack);
+  for (let i = 0; i < yErased.length; i++) {
+    newStack = newStack.filter((brick) => eraseLine(brick, yErased[i]));
+  }
+  if (yErased.length === 0) {
+    return newStack;
+  }
+  return newStack;
+};
 
 const eraseLine = (brick, y) => {
   if (brick.y !== y) {
@@ -36,41 +74,7 @@ const calculateScore = (linesNumber, levelDifficulty) => {
   return scoreToAdd;
 };
 
-/* eslint-disable no-restricted-syntax, prefer-spread */
-const eraseLineCheck = (
-  bricks, stack, score, saveScore, levels, linesErased, saveLevels,
-  saveLinesErased, saveSpeed,
-) => {
-  // yToCheck sert a isoler les lignes à analyser
-  const yToCheck = [];
-  bricks.forEach((brick) => {
-    if (!yToCheck.includes(brick.y)) {
-      yToCheck.push(brick.y);
-    }
-  });
-  const yErased = [];
-  for (let i = 0; i < yToCheck.length; i++) {
-    const bricksEraseCheck = [];
-    stack.forEach((brick) => {
-      if (brick.y === yToCheck[i] && !bricksEraseCheck.includes(brick.x)) {
-        bricksEraseCheck.push(brick.x);
-      }
-    });
-    if (bricksEraseCheck.length === 10) {
-      yErased.push(yToCheck[i]);
-    }
-  }
-  const scoreToAdd = calculateScore(yErased.length, levels);
-  score += scoreToAdd;
-  saveScore(score);
-  levelUp(levels, linesErased, yErased.length, saveLevels, saveLinesErased, saveSpeed);
-  let newStack = _.cloneDeep(stack);
-  for (let i = 0; i < yErased.length; i++) {
-    newStack = newStack.filter((brick) => eraseLine(brick, yErased[i]));
-  }
-  if (yErased.length === 0) {
-    return newStack;
-  }
+const jeSaisPasFunction = (newStack, yErased) => {
   yErased.reverse();
   const toto = [];
   toto[0] = [];
@@ -99,4 +103,28 @@ const eraseLineCheck = (
   return newStack;
 };
 
-export default eraseLineCheck;
+/* eslint-disable no-restricted-syntax, prefer-spread */
+let eraseLineCheck = (
+  bricks, stack, score, saveScore, levels, linesErased, saveLevels,
+  saveLinesErased, saveSpeed, linesBeingErased, saveLinesBeingErased,
+) => {
+  // yToCheck sert a isoler les lignes à analyser
+  const yToCheck = fillYToCheck(bricks);
+  // yErased sert a isoler les lignes pleines depuis yToCheck
+  const yErased = fillYErased(yToCheck, stack);
+  saveLinesBeingErased(yErased.length);
+  score += calculateScore(yErased.length, levels);
+  saveScore(score);
+  levelUp(levels, linesErased, yErased.length, saveLevels, saveLinesErased, saveSpeed);
+  // newStack = la stack apres les lignes effacé
+  let newStack = calculateNewStack(stack, yErased)
+  giveLinesToOpponents(yErased.length);
+  newStack = jeSaisPasFunction(newStack, yErased);
+  return newStack;
+};
+
+const exportFunctions = {
+  eraseLineCheck,
+};
+
+export default exportFunctions;

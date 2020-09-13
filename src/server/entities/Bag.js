@@ -22,7 +22,6 @@ export default class Bag {
         this.mainBag = [...this.mainBag, ...this.generateBag()];
         continue;
       }
-      console.log(this.mainBag);
       return this.mainBag.slice(bagIndex, bagIndex + nbPiecesToReturn);
     }
   };

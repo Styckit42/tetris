@@ -59,7 +59,7 @@ const generateJ = () => (
   }
 );
 
-export const generatePiece = (pieceToCreate) => {
+let generatePiece = (pieceToCreate) => {
   let newPiece = [];
   switch (pieceToCreate) {
     case I:
@@ -87,3 +87,9 @@ export const generatePiece = (pieceToCreate) => {
       return null;
   }
 };
+
+const exportFunctions = {
+  generatePiece,
+};
+
+export default exportFunctions;

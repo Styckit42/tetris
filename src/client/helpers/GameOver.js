@@ -1,4 +1,4 @@
-export const isStackHigh = (stack) => {
+let isStackHigh = (stack) => {
   const a = 3;
   const b = 6;
   for (let i = 0; i < stack.length; i += 1) {
@@ -11,11 +11,18 @@ export const isStackHigh = (stack) => {
   return false;
 };
 
-export const gameOverCheck = (bricks) => {
+let gameOverCheck = (bricks) => {
   for (let i = 0; i < bricks.length; i += 1) {
-    if (bricks[i].y <=  0) {
+    if (bricks[i].y < 0) {
       return true;
     }
   }
   return false;
 };
+
+const exportFunctions = {
+  gameOverCheck,
+  isStackHigh,
+}
+
+export default exportFunctions;

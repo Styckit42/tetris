@@ -10,6 +10,10 @@ export function refillBag() {
   socket.emit('refillNextPiece');
 };
 
-export function increaseNextPieceIndex(stackHigh) {
-  socket.emit('increaseBagIndex', stackHigh);
+export function increaseNextPieceIndex(stack, stackHigh, score) {
+  socket.emit('increaseBagIndex', stack, stackHigh, score);
+};
+
+export function giveLinesToOpponents(linesErased, opponentList) {
+  socket.emit('giveLinesToOpponents', linesErased, opponentList);
 };

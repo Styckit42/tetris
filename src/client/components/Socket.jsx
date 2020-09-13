@@ -8,7 +8,6 @@ const Socket = ({
   saveIsAdmin, saveGameState, savePiece, saveNextPiece,
   saveOpponentList,
 }) => {
-  console.log('salut socket');
   onClientLoad();
   checkIsAdmin(saveIsAdmin);
   launchMulti(saveGameState, savePiece, saveNextPiece);

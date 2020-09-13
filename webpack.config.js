@@ -3,27 +3,27 @@ var path = require('path');
 module.exports = {
   entry: {
     clientApp : './src/client/index.jsx',
-    // servApp : './src/server/index.js'
   },
 
   resolve: {
-    extensions: [".jsx", "", ".webpack.js", ".web.js", ".js", ".json"]
+    extensions: [".jsx", ".webpack.js", ".web.js", ".js", ".json"]
   },
 
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'bundle.js'
+    filename: 'client.js'
   },
 
-  externals: ["fs"],
-
   module: {
-    loaders: [{
+    rules: [{
       test: /\.(js|jsx|mp3)$/,
       exclude: /node_modules/,
-      loader: 'babel',
+      loader: 'babel-loader',
       query:{
-        presets: ["es2015", "react", "stage-0"]
+        presets: [
+          "@babel/env",
+          "@babel/react",
+        ]
       }
     },
     {
@@ -32,19 +32,9 @@ module.exports = {
       loader: "babel-loader"
     },
     {
-      test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
-      loader: "eslint-loader"
-    },
-    {
       test: /\.css$/,
       exclude: /node_modules/,
-      loader: 'style-loader'
-    },
-    {
-      test: /\.css$/,
-      exclude: /node_modules/,
-      loader: 'css-loader'
+      use: ['style-loader', 'css-loader']
     },
     {
       test: /\.(mp3|aac|ogg|wav)$/,

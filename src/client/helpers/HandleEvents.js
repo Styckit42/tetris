@@ -1,8 +1,7 @@
 import _ from 'lodash';
-import { rotate, applyWallKick } from './Rotate';
-import { generatePiece, generateNextPiece } from './PieceGenerations';
-import eraseLineCheck from './Line';
-import { move, collisionTest } from './Movements';
+import LineFuncs from './Line';
+import MovementsFuncs from './Movements';
+import RotateFuncs from './Rotate';
 import {
   LEFT, RIGHT, UP, DOWN, SPACE, /* ESC , */
 } from '../constants/keyBoardConstants';
@@ -10,19 +9,19 @@ import { COLLISION_STACK, COLLISION_WALL, NO_COLLISION } from '../constants/coll
 import { I } from '../constants/piecesConstants';
 import { WALLKICK_DEFAULT, WALLKICK_I } from '../constants/rotateConstants';
 import { GAME_OVER } from '../constants/statusConstants';
-import { isStackHigh, gameOverCheck } from './GameOver';
-import { increaseNextPieceIndex, refillNextPiece } from './SocketEmit';
+import GameOverFuncs from './GameOver';
+import { increaseNextPieceIndex, giveLinesToOpponents } from './SocketEmit';
 
 const handleRotate = (props, width, height) => {
   const { piece, stack, savePiece } = props;
   let pieceTmp = _.cloneDeep(piece);
-  pieceTmp = rotate(pieceTmp);
+  pieceTmp = RotateFuncs.rotate(pieceTmp);
   const wallKick = (pieceTmp.type === I) ? WALLKICK_I[piece.state] : WALLKICK_DEFAULT[piece.state];
   for (let i = 0; i < wallKick.length; i++) {
     // element = tout un state d un wallKick
     const element = wallKick[i];
-    pieceTmp = applyWallKick(element, pieceTmp);
-    const collision = collisionTest(pieceTmp.bricks, stack, width, height);
+    pieceTmp = RotateFuncs.applyWallKick(element, pieceTmp);
+    const collision = MovementsFuncs.collisionTest(pieceTmp.bricks, stack, width, height);
     if (collision === NO_COLLISION) {
       savePiece(pieceTmp);
       return;
@@ -32,29 +31,32 @@ const handleRotate = (props, width, height) => {
 
 const handleMove = (keyCode, props, width, height, piece) => {
   const {
-    stack, score,
+    stack, score, opponentList,
     levels, linesErased, saveGameState,
     savePiece, saveStack, saveScore, saveLevels,
-    saveLinesErased, saveSpeed,
+    saveLinesErased, saveSpeed, linesBeingErased,
+    saveLinesBeingErased, nextPiece,
   } = props;
+  if (piece === null) {
+    return false;
+  }
   const pieceTmp = _.cloneDeep(piece);
-  pieceTmp.bricks = move(piece.bricks, keyCode, stack);
-  const collision = collisionTest(pieceTmp.bricks, stack, width, height, keyCode);
+  pieceTmp.bricks = MovementsFuncs.move(piece.bricks, keyCode, stack);
+  const collision = MovementsFuncs.collisionTest(pieceTmp.bricks, stack, width, height, keyCode);
   switch (collision) {
     case COLLISION_STACK:
-      console.log(piece.bricks);
-      if (gameOverCheck(piece.bricks, stack)) {
+      if (GameOverFuncs.gameOverCheck(piece.bricks, stack)) {
         saveGameState(GAME_OVER);
         return false;
       }
       let stackTmp = [...stack, ...piece.bricks];
-      stackTmp = eraseLineCheck(piece.bricks, stackTmp, score, saveScore,
-        levels, linesErased, saveLevels, saveLinesErased, saveSpeed);
-        saveStack(stackTmp);
-        const stackHigh = isStackHigh(stackTmp);
-        increaseNextPieceIndex(stackTmp, stackHigh, score);
-        return false;
-        case COLLISION_WALL:
+      stackTmp = LineFuncs.eraseLineCheck(piece.bricks, stackTmp, score, saveScore,
+        levels, linesErased, saveLevels, saveLinesErased, saveSpeed, linesBeingErased, saveLinesBeingErased);
+      saveStack(stackTmp);
+      const stackHigh = GameOverFuncs.isStackHigh(stackTmp);
+      increaseNextPieceIndex(stackTmp, stackHigh, score);
+      return false;
+    case COLLISION_WALL:
       return false;
     case NO_COLLISION:
       savePiece(pieceTmp);

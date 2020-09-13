@@ -1,14 +1,14 @@
 import React from 'react';
 import Brick from './Brick';
-import { calculateOrder } from '../helpers/Movements';
+import MovementsFuncs from '../helpers/Movements';
 
 const Piece = ({ bricks }) => {
   const piece = bricks.map(
     (brick) => {
-      const { x, y, color } = brick;
+      const { x, y } = brick;
       if (y >= 0) {
-        const order = calculateOrder(x, y);
-        return (<Brick x={x} y={y} color={color} key={order} />);
+        const order = MovementsFuncs.calculateOrder(x, y);
+        return (<Brick brick={brick} key={order} />);
       }
       return false;
     },
@@ -21,10 +21,3 @@ const Piece = ({ bricks }) => {
 };
 
 export default Piece;
-
-/**
- * Piece
- * Piece component, child of Board, parent of Brick
- * param : bricks (object)
- * return : piece
- */

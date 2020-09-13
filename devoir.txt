@@ -1,4 +1,12 @@
-ligne 50 et 54 dans Board, changer le bag
-54 dans un socketON
+Passer les lignes aux autres joueurs (n - 1, indestructible)
+Spectre => seulement la forme (trop de détails atm)
+faire attendre un new user, si il veut rentrer dans une game deja lancé.
+tests unitaires
 
-handleEvents ligne 44 transformer en emit vers serveur
+jest --coverage --collectCoverageFrom=src/client/**/*.j*
+
+    /*{
+      test: /\.(js|jsx)$/,
+      exclude: /node_modules/,
+      loader: "eslint-loader"
+    },*/

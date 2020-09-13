@@ -8,11 +8,15 @@ import { ThemeProvider } from 'styled-components';
 import reducer from './reducers/save';
 import Main from './components/Main';
 import { MULTI_MENU } from './constants/statusConstants';
-import './css/style.css';
+import GlobalStyles from './styles/globalStyles';
 
 const theme = {
-  mainColor: '#f2a640',
+  mainColor: '#F2A640',
+  darkColor: '#060C21',
+  darkBorderColor: '#2E407F',
+  brightBlueColor: '#00bcd4',
 };
+
 
 const initialState = {
   stack: [],
@@ -28,6 +32,7 @@ const initialState = {
   volume: 0.01,
   isAdmin: false,
   opponentList: [],
+  linesBeingErased: 0,
 };
 
 const store = createStore(
@@ -37,9 +42,12 @@ const store = createStore(
 );
 
 ReactDom.render((
-  <ThemeProvider theme={theme}>
-    <Provider store={store}>
-      <Main />
-    </Provider>
-  </ThemeProvider>
+  <React.Fragment>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Provider store={store}>
+        <Main />
+      </Provider>
+    </ThemeProvider>
+  </React.Fragment>
 ), document.getElementById('tetris'));

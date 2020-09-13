@@ -2,7 +2,7 @@ import _ from 'lodash';
 import {
   SAVE_PIECE, SAVE_STACK, SAVE_GAME_STATE, SAVE_SCORE, SAVE_LEVELS, SAVE_LINES_ERASED,
   SAVE_NEXT_PIECE, SAVE_HAS_TO_FALL, RESET_STATE, SAVE_SPEED, SAVE_VOLUME, SAVE_IS_ADMIN,
-  SAVE_OPPONENT_LIST,
+  SAVE_OPPONENT_LIST, SAVE_LINES_BEING_ERASED,
 } from '../constants/saveConstants';
 import { IN_MENU } from '../constants/statusConstants';
 
@@ -30,14 +30,12 @@ const reducer = (state = {}, action) => {
       return { ...state, volume: action.volume };
     case SAVE_IS_ADMIN:
       return { ...state, isAdmin: action.isAdmin };
+    case SAVE_LINES_BEING_ERASED:
+      return { ...state, linesBeingErased: action.linesBeingErased };
     case SAVE_OPPONENT_LIST:
       let newOpponentList = _.cloneDeep(state.opponentList);
-      console.log(newOpponentList);
-      console.log(state.opponentList);
       let isFind = false;
       for (let i = 0; i < newOpponentList.length; i++) {
-        console.log('on est dans le reducer');
-        console.log(newOpponentList);
         if (action.player.id === newOpponentList[i].id) {
           newOpponentList[i].score = action.player.score;
           newOpponentList[i].stack = action.player.stack;

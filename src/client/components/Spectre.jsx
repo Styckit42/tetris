@@ -1,7 +1,7 @@
 import React from 'react';
-import Piece from './Piece';
 import styled from 'styled-components';
-import { generateBoard, filterBoard } from '../helpers/BoardGeneration';
+import Piece from './Piece';
+import BoardGenFuncs from '../helpers/BoardGeneration';
 
 const StyledBoard = styled.div`
   display: flex;
@@ -14,15 +14,20 @@ const StyledBoard = styled.div`
 const width = 10;
 const height = 20;
 
+/*const spectreLine = (stack) => {
+
+};*/
+
 const Spectre = (props) => {
   const { id, stack, score } = props;
+  const spectreStack = BoardGenFuncs.calculateSpectreStack(stack, width, height);
   let test = [];
-  const board = generateBoard(width, height);
-  const boardFiltered = filterBoard(board, test, stack);
+  const board = BoardGenFuncs.generateBoard(width, height);
+  const boardFiltered = BoardGenFuncs.filterBoard(board, test, spectreStack);
   return (
     <StyledBoard>
       <Piece bricks={boardFiltered} />
-      <Piece bricks={stack} />
+      <Piece bricks={spectreStack} />
     </StyledBoard>
   );
 };

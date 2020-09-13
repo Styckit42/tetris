@@ -1,29 +1,47 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+
+const StyledScoreBox = styled.div`
+  padding: 20px 0 20px 0;
+`;
+
+const StyledScoreLine = styled.div`
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  &:not(:last-child){
+    margin-bottom: 10px;
+  }
+  & > span{
+    font-weight: 600;
+    color: ${props => props.theme.mainColor};
+  }
+`;
 
 const Score = (props) => {
   const {
     score, levels, linesErased, speed,
   } = props;
   return (
-    <div>
-      <h1>
-        Score:
-        {score}
-      </h1>
-      <h1>
-        Level:
-        {levels}
-      </h1>
-      <h1>
-        LinesErased:
-        {linesErased}
-      </h1>
-      <h1>
-        Speed:
-        {speed}
-      </h1>
-    </div>
+    <StyledScoreBox>
+      <StyledScoreLine>
+        Score: 
+        <span>{score}</span>
+      </StyledScoreLine>
+      <StyledScoreLine>
+        Level: 
+        <span>{levels}</span>
+      </StyledScoreLine>
+      <StyledScoreLine>
+        LinesErased: 
+        <span>{linesErased}</span>
+      </StyledScoreLine>
+      <StyledScoreLine>
+        Speed: 
+        <span>{speed}</span>
+      </StyledScoreLine>
+    </StyledScoreBox>
   );
 };
 

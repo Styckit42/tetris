@@ -3,8 +3,6 @@ import Bag from '../entities/Bag.js';
 export const disconnectPlayer = (socket, currentGame) => {
   socket.on('disconnect', () => {
     currentGame.removePlayer(socket.id);
-    console.log('user disconnected: ' + socket.id);
-    console.log(currentGame);
     socket.nsp.to(currentGame.admin.id).emit('sendIsAdmin', true);
   });
 };
@@ -25,6 +23,7 @@ export const increaseBagIndex = (socket, player, currentGame) => {
     player.score = score;
     socket.broadcast.emit('updatePlayerSpectre', player);
     player.bagIndex += 1;
+    console.log("stack high: " + stackHigh);
     socket.nsp.to(player.id).emit('getNextPieceFromServer', {
       piece: currentGame.bag.givePiecesToPlayer(player.bagIndex, 1),
       nextPiece: currentGame.bag.givePiecesToPlayer(player.bagIndex + 1, 1),
@@ -39,5 +38,13 @@ export const refillBag = (socket, player, currentGame) => {
       piece: currentGame.bag.givePiecesToPlayer(player.bagIndex, 1),
       nextPiece: currentGame.bag.givePiecesToPlayer(player.bagIndex + 1, 1),
     });
+  });
+};
+
+export const giveLinesToOpponents = (socket, player, currentGame) => {
+  socket.on('giveLinesToOpponents', (linesErased, opponentList) => {
+    console.log("dans le give");
+    console.log(linesErased);
+    console.log(opponentList);
   });
 };
