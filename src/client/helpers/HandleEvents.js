@@ -35,7 +35,7 @@ const handleMove = (keyCode, props, width, height, piece) => {
     levels, linesErased, saveGameState,
     savePiece, saveStack, saveScore, saveLevels,
     saveLinesErased, saveSpeed, linesBeingErased,
-    saveLinesBeingErased, nextPiece,
+    saveLinesBeingErased,
   } = props;
   if (piece === null) {
     return false;
@@ -51,7 +51,8 @@ const handleMove = (keyCode, props, width, height, piece) => {
       }
       let stackTmp = [...stack, ...piece.bricks];
       stackTmp = LineFuncs.eraseLineCheck(piece.bricks, stackTmp, score, saveScore,
-        levels, linesErased, saveLevels, saveLinesErased, saveSpeed, linesBeingErased, saveLinesBeingErased);
+        levels, linesErased, saveLevels, saveLinesErased, saveSpeed, saveLinesBeingErased, opponentList);
+      savePiece(null);
       saveStack(stackTmp);
       const stackHigh = GameOverFuncs.isStackHigh(stackTmp);
       increaseNextPieceIndex(stackTmp, stackHigh, score);

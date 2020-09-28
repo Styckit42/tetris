@@ -138,7 +138,7 @@ const StyledBoard = styled.div`
     bottom: -2px;
     background-color: #FFF;
     z-index: -1;
-    filter: blur(40px); 
+    filter: blur(40px);
   }
 
   &:before,
@@ -159,16 +159,13 @@ const Board = (props) => {
     test = piece.bricks;
   }
   const board = BoardGenFuncs.generateBoard(width, height);
-  console.log('piece');
-  console.log(piece);
-  console.log('stack');
-  console.log(stack);
-  console.log(board);
   const boardFiltered = BoardGenFuncs.filterBoard(board, test, stack);
-  console.log(boardFiltered);
-  console.log(board);
+  console.log('in board');
+  console.log(piece);
+  console.log(test);
+  console.log(stack);
   return (
-    <StyledWrapper linesBeingErased={ props.linesBeingErased } tabIndex="0" onKeyUp={(e) => { handleOnKeyDown(e, props, width, height); }}>
+    <StyledWrapper linesBeingErased={props.linesBeingErased } tabIndex="0" onKeyUp={(e) => { handleOnKeyDown(e, props, width, height); }}>
       <StyledBoard>
         <Piece bricks={boardFiltered} />
         <Piece bricks={test} />
@@ -176,6 +173,7 @@ const Board = (props) => {
       </StyledBoard>
       <div className="boxScore">
         <Score />
+        { props.playerName }
       </div>
       <NextPiece />
     </StyledWrapper>
@@ -186,7 +184,6 @@ let myTimeout = null;
 let mySpeed = 1000;
 
 Board.componentDidMount = (props) => {
-  
   myTimeout = setInterval(() => { props.saveHasToFall(true); }, props.speed);
 };
 
@@ -219,6 +216,8 @@ const mapStateToProps = (state) => ({
   opponentList: state.opponentList,
   linesBeingErased: state.linesBeingErased,
   nextPiece: state.nextPiece,
+  playerId: state.playerId,
+  playerName: state.playerName,
 });
 
 const mapDispatchToProps = (dispatch) => ({

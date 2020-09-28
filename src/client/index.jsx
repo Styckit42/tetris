@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import reducer from './reducers/save';
 import Main from './components/Main';
-import { MULTI_MENU } from './constants/statusConstants';
+import { IN_MENU } from './constants/statusConstants';
 import GlobalStyles from './styles/globalStyles';
 
 const theme = {
@@ -17,10 +17,9 @@ const theme = {
   brightBlueColor: '#00bcd4',
 };
 
-
 const initialState = {
   stack: [],
-  gameState: MULTI_MENU,
+  gameState: IN_MENU,
   inOptions: false,
   score: 0,
   levels: 1,
@@ -33,6 +32,8 @@ const initialState = {
   isAdmin: false,
   opponentList: [],
   linesBeingErased: 0,
+  playerId: '',
+  playerName: '',
 };
 
 const store = createStore(

@@ -13,6 +13,8 @@ const Piece = ({ bricks }) => {
       return false;
     },
   );
+  console.log("dans piece");
+  console.log(piece);
   return (
     <React.Fragment>
       {piece}

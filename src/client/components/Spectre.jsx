@@ -14,22 +14,29 @@ const StyledBoard = styled.div`
 const width = 10;
 const height = 20;
 
-/*const spectreLine = (stack) => {
-
-};*/
-
 const Spectre = (props) => {
-  const { id, stack, score } = props;
-  const spectreStack = BoardGenFuncs.calculateSpectreStack(stack, width, height);
-  let test = [];
-  const board = BoardGenFuncs.generateBoard(width, height);
-  const boardFiltered = BoardGenFuncs.filterBoard(board, test, spectreStack);
-  return (
-    <StyledBoard>
-      <Piece bricks={boardFiltered} />
-      <Piece bricks={spectreStack} />
-    </StyledBoard>
-  );
+  const { name, stack, score } = props;
+  if (stack !== null) {
+    const spectreStack = BoardGenFuncs.calculateSpectreStack(stack, width, height);
+    const test = [];
+    const board = BoardGenFuncs.generateBoard(width, height);
+    const boardFiltered = BoardGenFuncs.filterBoard(board, test, spectreStack);
+    return (
+      <StyledBoard>
+        {name}
+        <Piece bricks={boardFiltered}/>
+        <Piece bricks={spectreStack}/>
+        {score}
+      </StyledBoard>
+    );
+  }
+  else {
+    return (
+      <div>
+        stack = null
+      </div>
+    );
+  }
 };
 
 export default Spectre;

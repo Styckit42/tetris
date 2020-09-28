@@ -1,15 +1,25 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Button from './Button';
-import { IN_MULTI } from '../constants/statusConstants';
+import {IN_MULTI} from '../constants/statusConstants';
 
 const Lobby = ({ isAdmin, opponentList }) => {
+  const opponents = opponentList.map(
+    (opponent) => {
+      const { name } = opponent;
+      return (
+        <div key={name}>
+          { name }
+        </div>
+      );
+    },
+  );
   if (isAdmin === true) {
     return (
       <div>
         <Button label="StartGame" action={IN_MULTI} />
         <h3>Joueurs dans la partie</h3>
-        { opponentList }
+        { opponents }
       </div>
     );
   }
@@ -17,7 +27,7 @@ const Lobby = ({ isAdmin, opponentList }) => {
     <div>
       <h1>Welcome in Lobby</h1>
       <h3>Joueurs dans la partie</h3>
-        { opponentList }
+      { opponents }
     </div>
   );
 };

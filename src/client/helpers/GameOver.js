@@ -23,6 +23,6 @@ let gameOverCheck = (bricks) => {
 const exportFunctions = {
   gameOverCheck,
   isStackHigh,
-}
+};
 
 export default exportFunctions;

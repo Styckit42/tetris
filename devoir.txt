@@ -2,6 +2,7 @@ Passer les lignes aux autres joueurs (n - 1, indestructible)
 Spectre => seulement la forme (trop de détails atm)
 faire attendre un new user, si il veut rentrer dans une game deja lancé.
 tests unitaires
+avoir l opponentList qui se remplie au demarrage de la partie, et pas apres le 1er bloc du joueur
 
 jest --coverage --collectCoverageFrom=src/client/**/*.j*
 
@@ -10,3 +11,34 @@ jest --coverage --collectCoverageFrom=src/client/**/*.j*
       exclude: /node_modules/,
       loader: "eslint-loader"
     },*/
+
+              <Sound  url={tetrisMusic}
+                  autoLoad='true'
+                  volume={100}
+                  playStatus={Sound.status.PLAYING}/>
+
+refaire tout lobby
+Création du lobby multijoueur, en passant par l'url
+le joueur qui attends la partie rentre dedans.
+Le joueur choisit un pseudo, en passant par l'url
+ajout musique et fx
+css
+Test unitaires
+check du respect du boilerplate
+fix les bugs de brick au gameover.
+middleware
+composants command-list
+
+
+
+bonus:
+personnalisation de la partie :
+    -sans ligne indestructibles
+    -rendre les lignes destructibles en multijoueur
+changement de couleur
+bouton pause
+sauvegarde des scores
+
+avoir le nom de la partie et le nom du joueur
+nom de la partie = currentGame.id;
+nom du joueur =

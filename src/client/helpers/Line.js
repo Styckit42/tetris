@@ -106,7 +106,7 @@ const jeSaisPasFunction = (newStack, yErased) => {
 /* eslint-disable no-restricted-syntax, prefer-spread */
 let eraseLineCheck = (
   bricks, stack, score, saveScore, levels, linesErased, saveLevels,
-  saveLinesErased, saveSpeed, linesBeingErased, saveLinesBeingErased,
+  saveLinesErased, saveSpeed, saveLinesBeingErased, opponentList, piece
 ) => {
   // yToCheck sert a isoler les lignes à analyser
   const yToCheck = fillYToCheck(bricks);
@@ -118,7 +118,7 @@ let eraseLineCheck = (
   levelUp(levels, linesErased, yErased.length, saveLevels, saveLinesErased, saveSpeed);
   // newStack = la stack apres les lignes effacé
   let newStack = calculateNewStack(stack, yErased)
-  giveLinesToOpponents(yErased.length);
+  giveLinesToOpponents(yErased.length, opponentList, piece);
   newStack = jeSaisPasFunction(newStack, yErased);
   return newStack;
 };

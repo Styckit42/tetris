@@ -4,12 +4,18 @@ var io = require('socket.io')(http);
 var path = require('path');
 import Game from './entities/Game.js';
 import Player from './entities/Player.js';
-import { disconnectPlayer, startGameMulti, increaseBagIndex, refillBag, giveLinesToOpponents } from './helpers/Socket.js';
+import {
+  disconnectPlayer, startGameMulti, increaseBagIndex, refillBag, giveLinesToOpponents,
+  updateOpponentList, isGameRunning, giveInfoToPlayer, playerHasLoose, resetServerState,
+  wrongInfo,
+} from './helpers/Socket.js';
 
 let gamesList = [];
 
+let url = null;
+
 app.get('/build/bundle.js', (req, res) => {
-  console.log("coucou david");
+  console.log("build/bundle.js");
   res.sendFile(path.resolve(__dirname + '/../../build/client.js'));
 });
 
@@ -23,25 +29,38 @@ const isGameExists = (id) => {
 };
 
 app.get('/*', (req, res) => {
+  url = req.url;
   res.sendFile(__dirname + '/index.html');
 });
 
 io.on('connection', (socket) => {
-  socket.on('onClientLoad', () => {
+  socket.on('onClientLoad', (hash) => {
+    const info = hash.match(/^#(.+)\[(.+)\]$/);
     console.log('a user connected');
-    const player = new Player(socket.id);
-    let currentGame = isGameExists(socket.handshake.headers.referer);
+    if (!info || (!info[1] || !info[2])) {
+      console.log('info = null');
+      wrongInfo(socket);
+      return;
+    }
+    const player = new Player(socket.id, info[2]);
+    let currentGame = isGameExists(info[1]);
     if (currentGame === false) {
-      currentGame = new Game(socket.handshake.headers.referer);
+      currentGame = new Game(info[1]);
       gamesList.push(currentGame);
     }
     currentGame.addPlayer(player);
+    console.log(currentGame);
+    giveInfoToPlayer(socket, player.id, player.name);
+    isGameRunning(socket, currentGame, player);
     startGameMulti(io, socket, currentGame);
     disconnectPlayer(socket, currentGame);
+    updateOpponentList(socket, currentGame, player);
     increaseBagIndex(socket, player, currentGame);
     socket.nsp.to(player.id).emit('sendIsAdmin', player.admin);
     refillBag(socket, player, currentGame);
     giveLinesToOpponents(socket, player, currentGame);
+    playerHasLoose(socket, currentGame);
+    resetServerState(socket, currentGame);
   });
 });
 

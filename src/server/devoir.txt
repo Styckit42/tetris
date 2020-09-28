@@ -1,1 +1,0 @@
-faire en sorte que la fonction givePiecesToplayer prenne l index et le nb de pieces que je veuxque la fonction fonctinne

@@ -15,9 +15,9 @@ const StyledSpectres = styled.div`
 const SpectreList = (props) => {
   const { opponentList } = props;
   const spectre = opponentList.map(
-    opponent => {
-      const { id, stack, score } = opponent;
-      return (<Spectre id={id} stack={stack} score={score} />);
+    (opponent) => {
+      const { name, stack, score } = opponent;
+      return (<Spectre name={name} stack={stack} score={score} />);
     },
   );
   return (

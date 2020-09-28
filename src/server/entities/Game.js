@@ -1,7 +1,11 @@
 export default class Game {
+  /**
+   *
+   * @param string id
+   */
   constructor(id) {
     this.id = id;
-    this.startFlag = false;
+    this.isGameRunning = false;
     this.bag = null;
     this.admin = null;
     this.playerList = [];
@@ -9,12 +13,12 @@ export default class Game {
   getId() {
     return this.id;
   }
-  setStartFlag(startFlag) {
-    this.startFlag = startFlag;
+  setIsGameRunning(isGameRunning) {
+    this.isGameRunning = isGameRunning;
     return this;
   }
-  getStartFlag() {
-    return this.startFlag;
+  getIsGameRunning() {
+    return this.isGameRunning;
   }
   setBag(bag) {
     this.bag = bag;
@@ -22,6 +26,10 @@ export default class Game {
   }
   getBag() {
     return this.bag;
+  }
+  resetBag() {
+    this.bag = null;
+    return this;
   }
   setAdmin(admin) {
     this.admin = admin;
@@ -35,6 +43,7 @@ export default class Game {
   }
   addPlayer(player) {
     if (this.playerList.length === 0) {
+      console.log(player);
       player.setAdmin(true);
       this.setAdmin(player);
     }

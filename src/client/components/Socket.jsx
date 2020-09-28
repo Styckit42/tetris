@@ -1,34 +1,52 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { checkIsAdmin, launchMulti, getNextPieceFromServer, updatePlayerSpectre } from '../helpers/SocketOn';
+import {
+  checkIsAdmin, launchMulti, getNextPieceFromServer, updatePlayerSpectre,
+  linesFromOtherPlayers, updateOpponentList, removePlayerFromOpponentList,
+  newPlayerWhileGameRunning, receivePlayerInfoFromServer, victory, wrongInfo,
+} from '../helpers/SocketOn';
 import { onClientLoad } from '../helpers/SocketEmit';
-import { saveIsAdminAction, saveGameStateAction, saveNextPieceAction, savePieceAction, saveOpponentListAction } from '../actions/save';
+import {
+  saveIsAdminAction, saveNextPieceAction, savePieceAction,
+  saveOpponentListAction, saveStackAction, savePieceAfterChangeAction,
+  saveOpponentListAfterRemoveAction, savePlayerIdAction, savePlayerNameAction, saveGameStateAction,
+} from '../actions/save';
 
 const Socket = ({
   saveIsAdmin, saveGameState, savePiece, saveNextPiece,
-  saveOpponentList,
+  saveOpponentList, saveStack, savePieceAfterChange, saveOpponentListAfterRemove,
+  savePlayerId, savePlayerName,
 }) => {
   onClientLoad();
   checkIsAdmin(saveIsAdmin);
   launchMulti(saveGameState, savePiece, saveNextPiece);
   getNextPieceFromServer(savePiece, saveNextPiece);
   updatePlayerSpectre(saveOpponentList);
-  /* if (gameState === IN_MULTI) {
-    startGameMulti();
-  } */
+  linesFromOtherPlayers(saveStack, savePieceAfterChange);
+  updateOpponentList(saveOpponentList);
+  removePlayerFromOpponentList(saveOpponentListAfterRemove);
+  newPlayerWhileGameRunning(saveGameState);
+  receivePlayerInfoFromServer(savePlayerId, savePlayerName);
+  victory(saveGameState);
+  wrongInfo(saveGameState);
   return null;
 };
 
-/* const mapStateToProps = (state) => ({
-  gameState: state.gameState,
-}); */
-
 const mapDispatchToProps = (dispatch) => ({
+  saveIsAdmin: (isAdmin) => {
+    dispatch(saveIsAdminAction(isAdmin));
+  },
   savePiece: (piece) => {
     dispatch(savePieceAction(piece));
   },
-  saveIsAdmin: (isAdmin) => {
-    dispatch(saveIsAdminAction(isAdmin));
+  savePieceAfterChange: (linesErased) => {
+    dispatch(savePieceAfterChangeAction(linesErased));
+  },
+  saveStack: (stack) => {
+    dispatch(saveStackAction(stack));
+  },
+  savePlayerName: (name) => {
+    dispatch(savePlayerNameAction(name));
   },
   saveGameState: (gameState) => {
     dispatch(saveGameStateAction(gameState));
@@ -38,7 +56,13 @@ const mapDispatchToProps = (dispatch) => ({
   },
   saveOpponentList: (player) => {
     dispatch(saveOpponentListAction(player));
-  }
+  },
+  saveOpponentListAfterRemove: (id) => {
+    dispatch(saveOpponentListAfterRemoveAction(id));
+  },
+  savePlayerId: (id) => {
+    dispatch(savePlayerIdAction(id));
+  },
 });
 
 export default connect(null, mapDispatchToProps)(Socket);
