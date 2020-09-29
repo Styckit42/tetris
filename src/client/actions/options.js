@@ -1,5 +1,5 @@
 import {
-  OPTIONS_LEVEL_START, OPTIONS_BOARD_SIZE, OPTIONS_DALTONIEN, OPTIONS_GAME_TYPE
+  OPTIONS_LEVEL_START, OPTIONS_BOARD_SIZE, OPTIONS_COLOR_BLIND, OPTIONS_GAME_TYPE,
 } from '../constants/optionsConstants';
 
 export const optionsLevelStartAction = (level) => ({
@@ -13,8 +13,8 @@ export const optionsBoardSizeAction = (width, height) => ({
   height,
 });
 
-export const optionsDaltonienAction = (bol) => ({
-  type: OPTIONS_DALTONIEN,
+export const optionsColorBlindAction = (bol) => ({
+  type: OPTIONS_COLOR_BLIND,
   bol,
 });
 

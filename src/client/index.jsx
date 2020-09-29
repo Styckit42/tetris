@@ -10,6 +10,7 @@ import optionsReducer from './reducers/options';
 import Main from './components/Main';
 import { IN_MENU } from './constants/statusConstants';
 import GlobalStyles from './styles/globalStyles';
+import { INDESTRUCTIBLE } from './constants/optionsConstants';
 
 const theme = {
   mainColor: '#F2A640',
@@ -35,6 +36,12 @@ const initialState = {
   linesBeingErased: 0,
   playerId: '',
   playerName: '',
+  options: {
+    colorBlind: false,
+    width: 10,
+    height: 20,
+    gameType: INDESTRUCTIBLE,
+  },
 };
 
 const store = createStore(

@@ -147,12 +147,12 @@ const StyledBoard = styled.div`
   }
 `;
 
-const width = 10;
-const height = 20;
+/*const width = 10;
+const height = 20;*/
 
 const Board = (props) => {
   const {
-    piece, stack, volume,
+    piece, stack, width, height,
   } = props;
   let test = [];
   if (piece !== null) {
@@ -218,6 +218,8 @@ const mapStateToProps = (state) => ({
   nextPiece: state.nextPiece,
   playerId: state.playerId,
   playerName: state.playerName,
+  width: state.options.width,
+  height: state.options.height,
 });
 
 const mapDispatchToProps = (dispatch) => ({

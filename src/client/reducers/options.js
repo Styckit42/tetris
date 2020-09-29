@@ -4,7 +4,7 @@ import {
 
 const optionsReducer = (state = {}, action) => {
   switch (action.type) {
-    case SAVE_PIECE:
+    case OPTIONS_LEVEL_START:
       return {...state, piece: action.piece};
     default:
       return state;
