@@ -5,7 +5,7 @@ var path = require('path');
 import Game from './entities/Game.js';
 import Player from './entities/Player.js';
 import {
-  disconnectPlayer, startGameMulti, increaseBagIndex, refillBag, giveLinesToOpponents,
+  disconnectPlayer, startGame, increaseBagIndex, refillBag, giveLinesToOpponents,
   updateOpponentList, isGameRunning, giveInfoToPlayer, playerHasLoose, resetServerState,
   wrongInfo,
 } from './helpers/Socket.js';
@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
     console.log(currentGame);
     giveInfoToPlayer(socket, player.id, player.name);
     isGameRunning(socket, currentGame, player);
-    startGameMulti(io, socket, currentGame);
+    startGame(io, socket, currentGame);
     disconnectPlayer(socket, currentGame);
     updateOpponentList(socket, currentGame, player);
     increaseBagIndex(socket, player, currentGame);

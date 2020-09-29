@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { saveGameStateAction } from '../actions/save';
 
-const StyledButton = styled.button`
+const StyledOptionsButton = styled.button`
   background: none;
   border: 0;
   color: inherit;
@@ -19,12 +19,12 @@ const StyledButton = styled.button`
   line-height: 36px;
 `;
 
-const Button = (props) => {
+const OptionsButton = (props) => {
   const { label, action, saveGameState } = props;
   return (
-    <StyledButton type="button" onClick={() => saveGameState(action)}>
+    <StyledOptionsButton type="button" onClick={() => saveGameState(action)}>
       {label}
-    </StyledButton>
+    </StyledOptionsButton>
   );
 };
 
@@ -34,4 +34,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(Button);
+export default connect(null, mapDispatchToProps)(OptionsButton);

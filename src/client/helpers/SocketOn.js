@@ -1,4 +1,4 @@
-import { IN_SOLO, MULTI_WAITING, VICTORY, WRONG_URL } from '../constants/statusConstants';
+import { START_BOARD, MULTI_WAITING, VICTORY, WRONG_URL } from '../constants/statusConstants';
 import PieceGenFuncs from './PieceGenerations';
 
 export function checkIsAdmin(saveIsAdmin) {
@@ -8,11 +8,11 @@ export function checkIsAdmin(saveIsAdmin) {
   });
 }
 
-export function launchMulti(saveGameState, savePiece, saveNextPiece) {
-  socket.on('launchMulti', ({ piece, nextPiece }) => {
+export function launchGame(saveGameState, savePiece, saveNextPiece) {
+  socket.on('launchGame', ({ piece, nextPiece }) => {
     savePiece(PieceGenFuncs.generatePiece(piece[0]));
     saveNextPiece(PieceGenFuncs.generatePiece(nextPiece[0]));
-    saveGameState(IN_SOLO);
+    saveGameState(START_BOARD);
   });
 }
 

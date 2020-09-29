@@ -4,13 +4,11 @@ import styled from 'styled-components';
 import Sound from 'react-sound';
 import Menu from './Menu';
 import Board from './Board';
-import MultiMenu from './MultiMenu';
 import GameOver from './GameOver';
 import Lobby from './Lobby';
-import JoinLobby from './JoinLobby';
 import SpectreList from './SpectreList';
 import {
-  IN_SOLO, MULTI_MENU, IN_MULTI, IN_MENU, GAME_OVER, IN_LOBBY, IN_JOIN,
+  START_BOARD, IN_MULTI, IN_MENU, GAME_OVER, IN_LOBBY,
   MULTI_WAITING, VICTORY, IN_OPTIONS, WRONG_URL,
 } from '../constants/statusConstants';
 import tetrisMusic from '../sounds/tetris-theme.mp3';
@@ -19,7 +17,7 @@ import Victory from './Victory';
 import WrongInfo from './WrongInfo';
 import { Options } from './Options';
 import { resetStateAction } from '../actions/save';
-import { startGameMulti, resetServerState } from '../helpers/SocketEmit';
+import { tellServerToStartGame, startGameMulti, resetServerState } from '../helpers/SocketEmit';
 
 const StyledGameArea = styled.div`
   display: flex;
@@ -28,18 +26,12 @@ const StyledGameArea = styled.div`
 
 const GameState = ({ gameState, resetState }) => {
   switch (gameState) {
-    case IN_SOLO:
+    case START_BOARD:
       return (
         <StyledGameArea>
           <Board />
           <SpectreList />
         </StyledGameArea>
-      );
-    case MULTI_MENU:
-      return (
-        <div>
-          <MultiMenu />
-        </div>
       );
     case MULTI_WAITING:
       return (
@@ -61,12 +53,8 @@ const GameState = ({ gameState, resetState }) => {
       return (
         <div><Lobby /></div>
       );
-    case IN_JOIN:
-      return (
-        <div><JoinLobby /></div>
-      );
     case IN_MULTI:
-      startGameMulti();
+      tellServerToStartGame();
       return null;
     case VICTORY:
       return (

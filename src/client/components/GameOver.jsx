@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 import Button from './Button';
 import { IN_MENU } from '../constants/statusConstants';
 import { tellServerPlayerHasLoose } from '../helpers/SocketEmit';
+import { saveStackAction } from '../actions/save';
 
 const GameOver = (props) => {
-  const { score, levels, playerId } = props;
+  const { score, levels, playerId, saveStack } = props;
   tellServerPlayerHasLoose(playerId);
+  const newStack = [];
+  saveStack(newStack);
   return (
     <div>
       <h1> YOU LOOSE </h1>
@@ -24,4 +27,10 @@ const mapStateToProps = (state) => ({
   playerId: state.playerId,
 });
 
-export default connect(mapStateToProps, null)(GameOver);
+const mapDispatchToProps = (dispatch) => ({
+  saveStack: (stack) => {
+    dispatch(saveStackAction(stack));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameOver);

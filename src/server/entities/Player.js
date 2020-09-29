@@ -8,6 +8,7 @@ export default class Player {
     this.admin = false;
     this.bagIndex = 0;
     this.isLoose = false;
+    this.isWaiting = false;
   }
   setName(name) {
     this.name = name;
@@ -54,12 +55,20 @@ export default class Player {
   getIsLoose() {
     return this.isLoose;
   }
+  setIsWaiting(isWaiting) {
+    this.isWaiting = isWaiting;
+    return this;
+  }
+  getIsWaiting() {
+    return this.isWaiting;
+  }
   resetState() {
     this.score = 0;
     this.level = 1;
     this.stack = null;
     this.bagIndex = 0;
     this.isLoose = false;
+    this.isWaiting = false;
     return this;
   }
 }

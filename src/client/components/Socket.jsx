@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  checkIsAdmin, launchMulti, getNextPieceFromServer, updatePlayerSpectre,
+  checkIsAdmin, launchGame, getNextPieceFromServer, updatePlayerSpectre,
   linesFromOtherPlayers, updateOpponentList, removePlayerFromOpponentList,
   newPlayerWhileGameRunning, receivePlayerInfoFromServer, victory, wrongInfo,
 } from '../helpers/SocketOn';
@@ -19,7 +19,7 @@ const Socket = ({
 }) => {
   onClientLoad();
   checkIsAdmin(saveIsAdmin);
-  launchMulti(saveGameState, savePiece, saveNextPiece);
+  launchGame(saveGameState, savePiece, saveNextPiece);
   getNextPieceFromServer(savePiece, saveNextPiece);
   updatePlayerSpectre(saveOpponentList);
   linesFromOtherPlayers(saveStack, savePieceAfterChange);

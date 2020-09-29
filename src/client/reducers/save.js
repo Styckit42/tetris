@@ -12,7 +12,7 @@ const reducer = (state = {}, action) => {
     case SAVE_PIECE:
       return { ...state, piece: action.piece };
     case SAVE_STACK:
-      return { ...state, stack: action.stack};
+      return { ...state, stack: action.stack };
     case SAVE_GAME_STATE:
       return { ...state, gameState: action.gameState };
     case SAVE_SCORE:
@@ -60,20 +60,19 @@ const reducer = (state = {}, action) => {
       }
       return { ...state, opponentList: newOpponentLst };
     case SAVE_PIECE_AFTER_CHANGE:
-      let newPiece = _.cloneDeep(state.piece.bricks);
+      const newPiece = _.cloneDeep(state.piece.bricks);
       const pieceReturn = [];
       for (let i = 0; i < newPiece.length; i++) {
         pieceReturn.push({
           x: newPiece[i].x,
           y: newPiece[i].y - action.linesErased,
           color: newPiece[i].color,
-        })
+        });
       }
-      console.log(pieceReturn);
-      return { ...state, piece: {...state.piece, bricks: pieceReturn}};
+      return { ...state, piece: { ...state.piece, bricks: pieceReturn } };
     case RESET_STATE:
       const admin = state.isAdmin;
-      const playerId = state.playerId;
+      const { playerId, playerName, opponentList } = state;
       return {
         stack: [],
         gameState: IN_MENU,
@@ -86,8 +85,9 @@ const reducer = (state = {}, action) => {
         speed: 1000,
         hasToFall: false,
         isAdmin: admin,
-        opponentList: [],
-        playerId: playerId,
+        playerId,
+        playerName,
+        opponentList,
       };
     default:
       return state;

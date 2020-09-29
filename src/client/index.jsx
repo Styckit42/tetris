@@ -6,6 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import reducer from './reducers/save';
+import optionsReducer from './reducers/options';
 import Main from './components/Main';
 import { IN_MENU } from './constants/statusConstants';
 import GlobalStyles from './styles/globalStyles';
@@ -38,6 +39,7 @@ const initialState = {
 
 const store = createStore(
   reducer,
+  optionsReducer,
   initialState,
   applyMiddleware(thunk, createLogger()),
 );

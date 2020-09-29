@@ -18,10 +18,10 @@ export const disconnectPlayer = (socket, currentGame) => {
   });
 };
 
-export const startGameMulti = (io, socket, currentGame) => {
-  socket.on('startGameMulti', () => {
+export const startGame = (io, socket, currentGame) => {
+  socket.on('startGame', () => {
     currentGame.bag = new Bag(currentGame.id, currentGame.playerList);
-    io.emit('launchMulti', {
+    io.emit('launchGame', {
       piece: currentGame.bag.givePiecesToPlayer(0, 1),
       nextPiece: currentGame.bag.givePiecesToPlayer(1, 1),
     });
@@ -92,6 +92,10 @@ export const giveLinesToOpponents = (socket, player, currentGame) => {
 
 export const isGameRunning = (socket, currentGame, player) => {
   if (currentGame.getIsGameRunning() === true) {
+    console.log('je suis bien rentré la');
+    player.setIsWaiting(true);
+    console.log(player.getIsWaiting());
+    console.log(currentGame);
     socket.nsp.to(player.id).emit('newPlayerWhileGameRunning', true);
   }
 };
@@ -109,8 +113,13 @@ export const playerHasLoose = (socket, currentGame) => {
         currentGame.playerList[i].setIsLoose(true);
       }
     }
+    console.log(currentGame);
     for (let j = 0; j < currentGame.playerList.length; j++) {
-      if (currentGame.playerList[j].getIsLoose() === false) {
+      console.log(currentGame.playerList[j].getIsLoose());
+      console.log(currentGame.playerList[j].getIsWaiting());
+      console.log(aliveCount);
+      if (currentGame.playerList[j].getIsLoose() === false
+        && currentGame.playerList[j].getIsWaiting() === false) {
         aliveCount += 1;
       }
     }
@@ -118,7 +127,8 @@ export const playerHasLoose = (socket, currentGame) => {
     console.log(aliveCount);
     if (aliveCount === 1) {
       for (let k = 0; k < currentGame.playerList.length; k++) {
-        if (currentGame.playerList[k].getIsLoose() === false) {
+        if (currentGame.playerList[k].getIsLoose() === false
+          && currentGame.playerList[k].getIsWaiting() === false) {
           socket.nsp.to(currentGame.playerList[k].id).emit('victory');
           currentGame.setIsGameRunning(false);
         }
@@ -133,6 +143,7 @@ export const resetServerState = (socket, currentGame) => {
       currentGame.playerList[i].resetState();
     }
     currentGame.resetBag();
+    currentGame.setIsGameRunning(false);
   });
 };
 
