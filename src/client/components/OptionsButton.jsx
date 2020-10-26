@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { saveGameStateAction } from '../actions/save';
+import { saveGameOptionsAction } from '../actions/options';
 
 const StyledOptionsButton = styled.button`
   background: none;
@@ -19,19 +19,27 @@ const StyledOptionsButton = styled.button`
   line-height: 36px;
 `;
 
+const saveOptions = (props) => {
+  props.saveGameOptions({...props.gameOptions, [props.type]: props.value});
+};
+
 const OptionsButton = (props) => {
-  const { label, action, saveGameState } = props;
+  const { label } = props;
   return (
-    <StyledOptionsButton type="button" onClick={() => saveGameState(action)}>
+    <StyledOptionsButton type="button" onClick={() => saveOptions(props)}>
       {label}
     </StyledOptionsButton>
   );
 };
 
+const mapStateToProps = (state) => ({
+  gameOptions: state.gameOptions,
+});
+
 const mapDispatchToProps = (dispatch) => ({
-  saveGameState: (gameState) => {
-    dispatch(saveGameStateAction(gameState));
+  saveGameOptions: (gameOptions) => {
+    dispatch(saveGameOptionsAction(gameOptions));
   },
 });
 
-export default connect(null, mapDispatchToProps)(OptionsButton);
+export default connect(mapStateToProps, mapDispatchToProps)(OptionsButton);

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { giveLinesToOpponents } from './SocketEmit';
+import {saveSpeedAction} from "../actions/save";
 
 const fillYToCheck = (bricks) => {
   const tab = [];
@@ -45,17 +46,21 @@ const eraseLine = (brick, y) => {
   return false;
 };
 
+export const speedUp = (levels, saveSpeed) => {
+  let newSpeed = 1050 - (levels * 50);
+  if (newSpeed < 50) {
+    newSpeed = 50;
+  }
+  saveSpeed(newSpeed);
+};
+
 const levelUp = (levels, linesErased, linesNumber, saveLevels, saveLinesErased, saveSpeed) => {
   linesErased += linesNumber;
   if (linesErased >= 10 && levels <= 18) {
     linesErased %= 10;
     levels += 1;
     saveLevels(levels);
-    let newSpeed = 1050 - (levels * 50);
-    if (newSpeed < 50) {
-      newSpeed = 50;
-    }
-    saveSpeed(newSpeed);
+    speedUp(levels, saveSpeed);
   }
   saveLinesErased(linesErased);
 };
@@ -125,6 +130,7 @@ let eraseLineCheck = (
 
 const exportFunctions = {
   eraseLineCheck,
+  speedUp,
 };
 
 export default exportFunctions;

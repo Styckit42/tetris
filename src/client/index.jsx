@@ -6,7 +6,6 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import reducer from './reducers/save';
-import optionsReducer from './reducers/options';
 import Main from './components/Main';
 import { IN_MENU } from './constants/statusConstants';
 import GlobalStyles from './styles/globalStyles';
@@ -27,8 +26,9 @@ const initialState = {
   levels: 1,
   linesErased: 0,
   piece: null,
+  shadowPiece: null,
   nextPiece: null,
-  speed: 1000,
+  speed: 10000,
   hasToFall: false,
   volume: 0.01,
   isAdmin: false,
@@ -36,17 +36,19 @@ const initialState = {
   linesBeingErased: 0,
   playerId: '',
   playerName: '',
-  options: {
-    colorBlind: false,
-    width: 10,
-    height: 20,
+  gameOptions: {
     gameType: INDESTRUCTIBLE,
+    colorBlind: false,
+    boardSize: {
+      width: 10,
+      height: 20,
+    },
+    levelStart: 1,
   },
 };
 
 const store = createStore(
   reducer,
-  optionsReducer,
   initialState,
   applyMiddleware(thunk, createLogger()),
 );

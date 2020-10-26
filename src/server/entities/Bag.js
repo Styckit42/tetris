@@ -8,7 +8,7 @@ export default class Bag {
     this.mainBag = [];
     this.mainBag = this.fillBag();
   }
-  
+
   fillBag() {
     return ([...this.mainBag, ...this.generateBag()]);
   };

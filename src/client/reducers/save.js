@@ -3,14 +3,18 @@ import {
   SAVE_PIECE, SAVE_STACK, SAVE_GAME_STATE, SAVE_SCORE, SAVE_LEVELS, SAVE_LINES_ERASED,
   SAVE_NEXT_PIECE, SAVE_HAS_TO_FALL, RESET_STATE, SAVE_SPEED, SAVE_VOLUME, SAVE_IS_ADMIN,
   SAVE_OPPONENT_LIST, SAVE_LINES_BEING_ERASED, SAVE_PIECE_AFTER_CHANGE,
-  SAVE_OPPONENT_LIST_AFTER_REMOVE, SAVE_PLAYER_ID, SAVE_PLAYER_NAME,
+  SAVE_OPPONENT_LIST_AFTER_REMOVE, SAVE_PLAYER_ID, SAVE_PLAYER_NAME, SAVE_SHADOW_PIECE,
 } from '../constants/saveConstants';
-import { IN_MENU } from '../constants/statusConstants';
+import {
+  SAVE_GAME_OPTIONS,
+} from '../constants/optionsConstants';
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
     case SAVE_PIECE:
       return { ...state, piece: action.piece };
+    case SAVE_SHADOW_PIECE:
+      return { ...state, shadowPiece: action.shadowPiece };
     case SAVE_STACK:
       return { ...state, stack: action.stack };
     case SAVE_GAME_STATE:
@@ -70,15 +74,22 @@ const reducer = (state = {}, action) => {
         });
       }
       return { ...state, piece: { ...state.piece, bricks: pieceReturn } };
+    case SAVE_GAME_OPTIONS:
+      return { ...state, gameOptions: action.gameOptions };
     case RESET_STATE:
       const admin = state.isAdmin;
-      const { playerId, playerName, opponentList } = state;
+      const {
+        gameState, playerId, playerName, opponentList, levels, gameOptions,
+      } = state;
+      for (let i = 0; i < opponentList.length; i++) {
+        opponentList[i].stack = [];
+      }
       return {
         stack: [],
-        gameState: IN_MENU,
+        gameState,
         inOptions: false,
         score: 0,
-        levels: 1,
+        levels,
         linesErased: 0,
         piece: null,
         nextPiece: null,
@@ -88,6 +99,7 @@ const reducer = (state = {}, action) => {
         playerId,
         playerName,
         opponentList,
+        gameOptions,
       };
     default:
       return state;

@@ -24,7 +24,9 @@ const StyledGameArea = styled.div`
   justify-content: center;
 `;
 
-const GameState = ({ gameState, resetState }) => {
+const GameState = ({
+  gameState, gameOptions,
+}) => {
   switch (gameState) {
     case START_BOARD:
       return (
@@ -40,7 +42,6 @@ const GameState = ({ gameState, resetState }) => {
         </div>
       );
     case IN_MENU:
-      resetState();
       resetServerState();
       return (
         <div><Menu /></div>
@@ -54,7 +55,7 @@ const GameState = ({ gameState, resetState }) => {
         <div><Lobby /></div>
       );
     case IN_MULTI:
-      tellServerToStartGame();
+      tellServerToStartGame(gameOptions);
       return null;
     case VICTORY:
       return (
@@ -75,6 +76,9 @@ const GameState = ({ gameState, resetState }) => {
 
 const mapStateToProps = (state) => ({
   gameState: state.gameState,
+  gameType: state.gameType,
+  levels: state.levels,
+  gameOptions: state.gameOptions,
 });
 
 const mapDispatchToProps = (dispatch) => ({

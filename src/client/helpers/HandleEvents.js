@@ -11,19 +11,20 @@ import { WALLKICK_DEFAULT, WALLKICK_I } from '../constants/rotateConstants';
 import { GAME_OVER } from '../constants/statusConstants';
 import GameOverFuncs from './GameOver';
 import { increaseNextPieceIndex, giveLinesToOpponents } from './SocketEmit';
+import {saveShadowPieceAction} from "../actions/save";
 
 const handleRotate = (props, width, height) => {
-  const { piece, stack, savePiece } = props;
+  const { piece, stack, savePiece, saveShadowPiece } = props;
   let pieceTmp = _.cloneDeep(piece);
   pieceTmp = RotateFuncs.rotate(pieceTmp);
   const wallKick = (pieceTmp.type === I) ? WALLKICK_I[piece.state] : WALLKICK_DEFAULT[piece.state];
   for (let i = 0; i < wallKick.length; i++) {
-    // element = tout un state d un wallKick
     const element = wallKick[i];
     pieceTmp = RotateFuncs.applyWallKick(element, pieceTmp);
     const collision = MovementsFuncs.collisionTest(pieceTmp.bricks, stack, width, height);
     if (collision === NO_COLLISION) {
       savePiece(pieceTmp);
+      saveShadowPiece(null);
       return;
     }
   }
@@ -35,7 +36,7 @@ const handleMove = (keyCode, props, width, height, piece) => {
     levels, linesErased, saveGameState,
     savePiece, saveStack, saveScore, saveLevels,
     saveLinesErased, saveSpeed, linesBeingErased,
-    saveLinesBeingErased,
+    saveLinesBeingErased, saveShadowPiece,
   } = props;
   if (piece === null) {
     return false;
@@ -51,8 +52,10 @@ const handleMove = (keyCode, props, width, height, piece) => {
       }
       let stackTmp = [...stack, ...piece.bricks];
       stackTmp = LineFuncs.eraseLineCheck(piece.bricks, stackTmp, score, saveScore,
-        levels, linesErased, saveLevels, saveLinesErased, saveSpeed, saveLinesBeingErased, opponentList);
+        levels, linesErased, saveLevels, saveLinesErased, saveSpeed,
+        saveLinesBeingErased, opponentList, width, height);
       savePiece(null);
+      saveShadowPiece(null);
       saveStack(stackTmp);
       const stackHigh = GameOverFuncs.isStackHigh(stackTmp);
       increaseNextPieceIndex(stackTmp, stackHigh, score);
@@ -61,6 +64,7 @@ const handleMove = (keyCode, props, width, height, piece) => {
       return false;
     case NO_COLLISION:
       savePiece(pieceTmp);
+      saveShadowPiece(null);
       return pieceTmp;
     default:
   }
@@ -76,6 +80,7 @@ const handleOnKeyDown = ({ keyCode }, props, width, height) => {
     }
   } else if (keyCode === LEFT || keyCode === RIGHT || keyCode === DOWN) {
     handleMove(keyCode, props, width, height, props.piece);
+
   } else if (keyCode === UP) {
     handleRotate(props, width, height);
   } /* else if (keyCode === ESC) {

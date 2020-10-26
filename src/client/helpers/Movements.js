@@ -60,6 +60,6 @@ const exportFunctions = {
   collisionTest,
   calculateOrder,
   move,
-}
+};
 
 export default exportFunctions;

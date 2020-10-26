@@ -2,8 +2,8 @@ export function onClientLoad() {
   socket.emit('onClientLoad', window.location.hash);
 }
 
-export function tellServerToStartGame() {
-  socket.emit('startGame');
+export function tellServerToStartGame(gameType) {
+  socket.emit('startGame', gameType);
 }
 
 export function refillBag() {

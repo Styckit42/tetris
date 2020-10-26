@@ -42,3 +42,7 @@ sauvegarde des scores
 avoir le nom de la partie et le nom du joueur
 nom de la partie = currentGame.id;
 nom du joueur =
+
+////////////////////////////
+bonus taille large
+shadowPiece

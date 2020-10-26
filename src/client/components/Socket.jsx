@@ -3,23 +3,25 @@ import { connect } from 'react-redux';
 import {
   checkIsAdmin, launchGame, getNextPieceFromServer, updatePlayerSpectre,
   linesFromOtherPlayers, updateOpponentList, removePlayerFromOpponentList,
-  newPlayerWhileGameRunning, receivePlayerInfoFromServer, victory, wrongInfo,
+  newPlayerWhileGameRunning, receivePlayerInfoFromServer, victory, wrongInfo, changeGameOptions,
 } from '../helpers/SocketOn';
 import { onClientLoad } from '../helpers/SocketEmit';
 import {
-  saveIsAdminAction, saveNextPieceAction, savePieceAction,
+  saveIsAdminAction, saveNextPieceAction, savePieceAction, saveLevelsAction,
   saveOpponentListAction, saveStackAction, savePieceAfterChangeAction,
-  saveOpponentListAfterRemoveAction, savePlayerIdAction, savePlayerNameAction, saveGameStateAction,
+  saveOpponentListAfterRemoveAction, savePlayerIdAction, savePlayerNameAction,
+  saveGameStateAction, saveShadowPieceAction,
 } from '../actions/save';
+import { saveGameOptionsAction } from '../actions/options';
 
 const Socket = ({
   saveIsAdmin, saveGameState, savePiece, saveNextPiece,
   saveOpponentList, saveStack, savePieceAfterChange, saveOpponentListAfterRemove,
-  savePlayerId, savePlayerName,
+  savePlayerId, savePlayerName, saveGameOptions, saveLevels, saveShadowPiece,
 }) => {
   onClientLoad();
   checkIsAdmin(saveIsAdmin);
-  launchGame(saveGameState, savePiece, saveNextPiece);
+  launchGame(saveGameState, savePiece, saveNextPiece, saveGameOptions, saveLevels, saveShadowPiece);
   getNextPieceFromServer(savePiece, saveNextPiece);
   updatePlayerSpectre(saveOpponentList);
   linesFromOtherPlayers(saveStack, savePieceAfterChange);
@@ -62,6 +64,15 @@ const mapDispatchToProps = (dispatch) => ({
   },
   savePlayerId: (id) => {
     dispatch(savePlayerIdAction(id));
+  },
+  saveGameOptions: (gameOptions) => {
+    dispatch(saveGameOptionsAction(gameOptions));
+  },
+  saveLevels: (levels) => {
+    dispatch(saveLevelsAction(levels));
+  },
+  saveShadowPiece: (shadowPiece) => {
+    dispatch(saveShadowPieceAction(shadowPiece));
   },
 });
 

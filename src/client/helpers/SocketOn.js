@@ -3,22 +3,23 @@ import PieceGenFuncs from './PieceGenerations';
 
 export function checkIsAdmin(saveIsAdmin) {
   socket.on('sendIsAdmin', (sendIsAdmin) => {
-    console.log(`is admin: ${sendIsAdmin}`);
     saveIsAdmin(sendIsAdmin);
   });
 }
 
-export function launchGame(saveGameState, savePiece, saveNextPiece) {
-  socket.on('launchGame', ({ piece, nextPiece }) => {
-    savePiece(PieceGenFuncs.generatePiece(piece[0]));
-    saveNextPiece(PieceGenFuncs.generatePiece(nextPiece[0]));
+export function launchGame(saveGameState, savePiece, saveNextPiece, saveGameOptions, saveLevels) {
+  socket.on('launchGame', ({ piece, nextPiece, gameOptions, blindOptions }) => {
+    savePiece(PieceGenFuncs.generatePiece(piece[0], blindOptions));
+    saveNextPiece(PieceGenFuncs.generatePiece(nextPiece[0], blindOptions));
     saveGameState(START_BOARD);
+    saveGameOptions(gameOptions);
+    saveLevels(gameOptions.levelStart);
   });
 }
 
 export function getNextPieceFromServer(savePiece, saveNextPiece) {
-  socket.on('getNextPieceFromServer', ({ piece, nextPiece, stackHigh }) => {
-    const pieceTmp = PieceGenFuncs.generatePiece(piece[0]);
+  socket.on('getNextPieceFromServer', ({ piece, nextPiece, stackHigh, blindOptions }) => {
+    const pieceTmp = PieceGenFuncs.generatePiece(piece[0], blindOptions);
     if (stackHigh === true) {
       pieceTmp.bricks.forEach((brick) => {
         brick.y -= 1;
@@ -27,7 +28,7 @@ export function getNextPieceFromServer(savePiece, saveNextPiece) {
     } else {
       savePiece(pieceTmp);
     }
-    saveNextPiece(PieceGenFuncs.generatePiece(nextPiece[0]));
+    saveNextPiece(PieceGenFuncs.generatePiece(nextPiece[0], blindOptions));
   });
 }
 
@@ -80,5 +81,5 @@ export function victory(saveGameState) {
 export function wrongInfo(saveGameState) {
   socket.on('wrongInfo', () => {
     saveGameState(WRONG_URL);
-  })
+  });
 }

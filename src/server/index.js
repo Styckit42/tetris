@@ -38,7 +38,6 @@ io.on('connection', (socket) => {
     const info = hash.match(/^#(.+)\[(.+)\]$/);
     console.log('a user connected');
     if (!info || (!info[1] || !info[2])) {
-      console.log('info = null');
       wrongInfo(socket);
       return;
     }
@@ -49,7 +48,6 @@ io.on('connection', (socket) => {
       gamesList.push(currentGame);
     }
     currentGame.addPlayer(player);
-    console.log(currentGame);
     giveInfoToPlayer(socket, player.id, player.name);
     isGameRunning(socket, currentGame, player);
     startGame(io, socket, currentGame);

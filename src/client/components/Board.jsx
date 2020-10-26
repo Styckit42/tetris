@@ -9,10 +9,12 @@ import { DOWN } from '../constants/keyBoardConstants';
 import {
   savePieceAction, saveStackAction, saveSpeedAction, saveGameStateAction,
   saveScoreAction, saveLevelsAction, saveLinesErasedAction, saveHasToFallAction, resetStateAction,
-  saveLinesBeingErasedAction,
+  saveLinesBeingErasedAction, saveShadowPieceAction,
 } from '../actions/save';
 import handleOnKeyDown from '../helpers/HandleEvents';
 import BoardGenFuncs from '../helpers/BoardGeneration';
+import LineFuncs from '../helpers/Line';
+import PieceGenFuncs from '../helpers/PieceGenerations';
 import NextPiece from './NextPiece';
 
 const shakeOneLine = keyframes`
@@ -147,29 +149,32 @@ const StyledBoard = styled.div`
   }
 `;
 
-/*const width = 10;
-const height = 20;*/
-
 const Board = (props) => {
   const {
-    piece, stack, width, height,
+    piece, stack, width, height, levels, saveSpeed, shadowPiece, saveShadowPiece,
   } = props;
-  let test = [];
+  PieceGenFuncs.defineShadowPiece(piece, shadowPiece, stack, saveShadowPiece, width, height);
+  if (levels > 1) {
+    LineFuncs.speedUp(levels, saveSpeed);
+  }
+  let testPiece = [];
   if (piece !== null) {
-    test = piece.bricks;
+    testPiece = piece.bricks;
+  }
+  let testShadow = [];
+  if (shadowPiece !== null) {
+    testShadow = shadowPiece.bricks;
   }
   const board = BoardGenFuncs.generateBoard(width, height);
-  const boardFiltered = BoardGenFuncs.filterBoard(board, test, stack);
-  console.log('in board');
-  console.log(piece);
-  console.log(test);
-  console.log(stack);
+  let boardFiltered = BoardGenFuncs.filterBoard(board, testPiece, stack);
+  boardFiltered = BoardGenFuncs.filterBoard(boardFiltered, testShadow, stack);
   return (
     <StyledWrapper linesBeingErased={props.linesBeingErased } tabIndex="0" onKeyUp={(e) => { handleOnKeyDown(e, props, width, height); }}>
       <StyledBoard>
-        <Piece bricks={boardFiltered} />
-        <Piece bricks={test} />
-        <Piece bricks={stack} />
+        <Piece bricks={boardFiltered} width={width} />
+        <Piece bricks={testPiece} width={width} />
+        <Piece bricks={stack} width={width} />
+        <Piece bricks={testShadow} width={width} />
       </StyledBoard>
       <div className="boxScore">
         <Score />
@@ -194,7 +199,7 @@ Board.componentDidUpdate = (props) => {
     myTimeout = setInterval(() => { props.saveHasToFall(true); }, props.speed);
   }
   if (props.hasToFall === true) {
-    handleOnKeyDown({ keyCode: DOWN }, props, width, height);
+    handleOnKeyDown({ keyCode: DOWN }, props, props.width, props.height);
     props.saveHasToFall(false);
   }
 };
@@ -205,6 +210,7 @@ Board.componentWillUnmount = () => {
 
 const mapStateToProps = (state) => ({
   piece: state.piece,
+  shadowPiece: state.shadowPiece,
   stack: state.stack,
   gameState: state.gameState,
   score: state.score,
@@ -218,8 +224,8 @@ const mapStateToProps = (state) => ({
   nextPiece: state.nextPiece,
   playerId: state.playerId,
   playerName: state.playerName,
-  width: state.options.width,
-  height: state.options.height,
+  width: state.gameOptions.boardSize.width,
+  height: state.gameOptions.boardSize.height,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -238,9 +244,6 @@ const mapDispatchToProps = (dispatch) => ({
   saveLevels: (levels) => {
     dispatch(saveLevelsAction(levels));
   },
-  saveLinesErased: (linesErasedInCurrentLevel) => {
-    dispatch(saveLinesErasedAction(linesErasedInCurrentLevel));
-  },
   saveHasToFall: (hasToFall) => {
     dispatch(saveHasToFallAction(hasToFall));
   },
@@ -252,6 +255,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   saveLinesBeingErased: (linesBeingErased) => {
     dispatch(saveLinesBeingErasedAction(linesBeingErased));
+  },
+  saveLinesErased: (linesErased) => {
+    dispatch(saveLinesErasedAction(linesErased));
+  },
+  saveShadowPiece: (shadowPiece) => {
+    dispatch(saveShadowPieceAction(shadowPiece));
   },
 });
 
