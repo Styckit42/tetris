@@ -28,7 +28,7 @@ const SpectreList = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  opponentList: state.opponentList
+  opponentList: state.opponentList,
 });
 
 export default connect(mapStateToProps, null)(SpectreList);

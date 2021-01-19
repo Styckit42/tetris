@@ -4,7 +4,7 @@ import Button from './Button';
 import { IN_MULTI } from '../constants/statusConstants';
 import OpponentList from './OpponentList';
 
-const Lobby = ({ isAdmin }) => {
+const Lobby = ({ isAdmin, opponentList }) => {
   if (isAdmin === true) {
     return (
       <div>

@@ -1,9 +1,8 @@
 import Bag from '../entities/Bag.js';
 import {aliveCount, checkGameOptions, giveLinesDestructibles, giveLinesIndestructible} from './Funcs.js';
 
-const isPlayersInGame = (currentGame) => {
+export const isPlayersInGame = (currentGame) => {
   if (currentGame.playerList.length === 0) {
-    console.log('no more players in the game');
     currentGame.isGameRunning = false;
   }
 };
@@ -37,6 +36,7 @@ export const startGame = (io, socket, currentGame) => {
   });
 };
 
+//MIDDLEWARE
 export const increaseBagIndex = (socket, player, currentGame) => {
   socket.on('increaseBagIndex', (stack, stackHigh, score) => {
     player.stack = stack;
@@ -48,17 +48,6 @@ export const increaseBagIndex = (socket, player, currentGame) => {
       piece: currentGame.bag.givePiecesToPlayer(player.bagIndex, 1),
       nextPiece: currentGame.bag.givePiecesToPlayer(player.bagIndex + 1, 1),
       stackHigh,
-      blindOptions,
-    });
-  });
-};
-
-export const refillBag = (socket, player, currentGame) => {
-  socket.on('refillBag', () => {
-    const blindOptions = currentGame.gameOptions.colorBlind;
-    socket.nsp.to(player.id).emit('getNextPieceFromServer', {
-      piece: currentGame.bag.givePiecesToPlayer(player.bagIndex, 1),
-      nextPiece: currentGame.bag.givePiecesToPlayer(player.bagIndex + 1, 1),
       blindOptions,
     });
   });

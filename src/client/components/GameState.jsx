@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import Sound from 'react-sound';
+import ReactAudioPlayer from 'react-audio-player';
 import Menu from './Menu';
 import Board from './Board';
 import GameOver from './GameOver';
@@ -17,20 +17,20 @@ import Victory from './Victory';
 import WrongInfo from './WrongInfo';
 import { Options } from './Options';
 import { resetStateAction } from '../actions/save';
-import { tellServerToStartGame, startGameMulti, resetServerState } from '../helpers/SocketEmit';
+import { tellServerToStartGame, resetServerState } from '../helpers/SocketEmit';
+import Music from './Music';
 
 const StyledGameArea = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const GameState = ({
-  gameState, gameOptions,
-}) => {
+const GameState = ({ gameState, gameOptions }) => {
   switch (gameState) {
     case START_BOARD:
       return (
         <StyledGameArea>
+          <Music source={"/sounds/tetris-theme.mp3"} />
           <Board />
           <SpectreList />
         </StyledGameArea>

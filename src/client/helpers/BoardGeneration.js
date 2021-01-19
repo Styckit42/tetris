@@ -1,5 +1,5 @@
 // Génération du board entier
-let generateBoard = (width, height) => {
+export const generateBoard = (width, height) => {
   const board = [];
   for (let j = 0; j < height; j++) {
     for (let i = 0; i < width; i++) {
@@ -16,7 +16,7 @@ let generateBoard = (width, height) => {
 
 /* eslint-disable no-restricted-syntax, guard-for-in */
 // Enlever les coord des pieces en cours et du tas, du board entier
-let filterPieces = (brickBoard, piece, stack) => {
+export const filterPieces = (brickBoard, piece, stack) => {
   for (const index in piece) {
     const brick = piece[index];
     if (brickBoard.x === brick.x && brickBoard.y === brick.y) {
@@ -32,7 +32,7 @@ let filterPieces = (brickBoard, piece, stack) => {
   return true;
 };
 
-let filterBoard = (board, piece, stack) => {
+export const filterBoard = (board, piece, stack) => {
   for (let i = 0; i < board.length; i++) {
     const brickBoard = board[i];
     if (!filterPieces(brickBoard, piece, stack)) {
@@ -47,7 +47,7 @@ const findHighStack = (stack, columnId, height) => {
   let max = height;
   for (let i = 0; i < stack.length; i++) {
     const element = stack[i];
-    if (element.x !== columnId) { 
+    if (element.x !== columnId) {
       continue;
     }
     if (element.y < max) {
@@ -57,7 +57,7 @@ const findHighStack = (stack, columnId, height) => {
   return max;
 }
 
-let calculateSpectreStack = (stack, width, height) => {
+export const calculateSpectreStack = (stack, width, height) => {
   let tab = [];
   for (let i = 0; i < width; i++) {
     const maxHigh = findHighStack(stack, i, height);
@@ -72,12 +72,3 @@ let calculateSpectreStack = (stack, width, height) => {
   }
   return tab;
 };
-
-const exportFunctions = {
-  calculateSpectreStack,
-  filterBoard,
-  filterPieces,
-  generateBoard,
-};
-
-export default exportFunctions;

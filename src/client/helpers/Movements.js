@@ -4,7 +4,7 @@ import {
 } from '../constants/keyBoardConstants';
 import { COLLISION_STACK, COLLISION_WALL, NO_COLLISION } from '../constants/collisionConstants';
 
-let move = (piece, direction) => {
+export const move = (piece, direction) => {
   const pieceTmp = _.cloneDeep(piece);
   switch (direction) {
     case LEFT:
@@ -33,9 +33,9 @@ let move = (piece, direction) => {
   return false;
 };
 
-let calculateOrder = (x, y) => (x + y * 10);
+export const calculateOrder = (x, y) => (x + y * 10);
 
-let collisionTest = (piece, stack, width, height, keyCode) => {
+export const collisionTest = (piece, stack, width, height, keyCode) => {
   for (let i = 0; i < piece.length; i++) {
     const brick = piece[i];
     const find = stack.find(
@@ -55,11 +55,3 @@ let collisionTest = (piece, stack, width, height, keyCode) => {
   }
   return NO_COLLISION;
 };
-
-const exportFunctions = {
-  collisionTest,
-  calculateOrder,
-  move,
-};
-
-export default exportFunctions;

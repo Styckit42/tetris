@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import styled from 'styled-components';
-import BoardGenFuncs from '../helpers/BoardGeneration';
+import { generateBoard, filterBoard } from '../helpers/BoardGeneration';
 import Piece from './Piece';
 
 const StyledBoardNextPiece = styled.div`
@@ -31,8 +31,8 @@ const NextPiece = (props) => {
       return brick;
     },
   );
-  const board = BoardGenFuncs.generateBoard(width, height);
-  const boardFiltered = BoardGenFuncs.filterBoard(board, pieceTmp.bricks, []);
+  const board = generateBoard(width, height);
+  const boardFiltered = filterBoard(board, pieceTmp.bricks, []);
   return (
     <StyledBoardNextPiece>
       <Piece bricks={boardFiltered} />

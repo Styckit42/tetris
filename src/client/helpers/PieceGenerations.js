@@ -5,7 +5,7 @@ import { STATE_0 } from '../constants/rotateConstants';
 import _ from 'lodash';
 import { DOWN } from '../constants/keyBoardConstants';
 import {COLLISION_STACK, NO_COLLISION} from '../constants/collisionConstants';
-import MovementsFuncs from './Movements';
+import { collisionTest, move } from './Movements';
 
 const generateI = () => (
   {
@@ -64,13 +64,14 @@ const generateJ = () => (
 );
 
 let applyBlindColorFilter = (piece) => {
-  for (let i = 0; i < piece.bricks.length; i++) {
-    piece.bricks[i].color = '#B62536';
+  const pieceTmp = _.cloneDeep(piece);
+  for (let i = 0; i < pieceTmp.bricks.length; i++) {
+    pieceTmp.bricks[i].color = '#B62536';
   }
-  return piece;
+  return pieceTmp;
 };
 
-let generatePiece = (pieceToCreate, blindOptions, saveShadowPiece) => {
+export const generatePiece = (pieceToCreate, blindOptions) => {
   let newPiece = [];
   switch (pieceToCreate) {
     case I:
@@ -120,7 +121,7 @@ let generatePiece = (pieceToCreate, blindOptions, saveShadowPiece) => {
   }
 };
 
-const checkPieceAndShadowPos = (shadowPiece, piece) => {
+export const checkPieceAndShadowPos = (shadowPiece, piece) => {
   const find = piece.bricks.find(
     (brickPiece) => {
       for (let i = 0; i < shadowPiece.bricks.length; i++) {
@@ -134,13 +135,13 @@ const checkPieceAndShadowPos = (shadowPiece, piece) => {
   return find;
 };
 
-const defineShadowPiece = (piece, shadowPiece, stack, saveShadowPiece, width, height) => {
+export const defineShadowPiece = (piece, shadowPiece, stack, saveShadowPiece, width, height) => {
   if (shadowPiece === null && piece !== null) {
     const shadowPiece = _.cloneDeep(piece);
-    while (MovementsFuncs.collisionTest(shadowPiece.bricks, stack, width, height, DOWN) === NO_COLLISION) {
-      shadowPiece.bricks = MovementsFuncs.move(shadowPiece.bricks, DOWN, stack);
+    while (collisionTest(shadowPiece.bricks, stack, width, height, DOWN) === NO_COLLISION) {
+      shadowPiece.bricks = move(shadowPiece.bricks, DOWN, stack);
     }
-    if (MovementsFuncs.collisionTest(shadowPiece.bricks, stack, width, height, DOWN) === COLLISION_STACK) {
+    if (collisionTest(shadowPiece.bricks, stack, width, height, DOWN) === COLLISION_STACK) {
       shadowPiece.bricks = shadowPiece.bricks.map(
         (brick) => {
           brick.y -= 1;
@@ -156,11 +157,3 @@ const defineShadowPiece = (piece, shadowPiece, stack, saveShadowPiece, width, he
     }
   }
 };
-
-const exportFunctions = {
-  generatePiece,
-  applyBlindColorFilter,
-  defineShadowPiece,
-};
-
-export default exportFunctions;

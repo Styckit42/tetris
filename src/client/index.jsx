@@ -10,6 +10,8 @@ import Main from './components/Main';
 import { IN_MENU } from './constants/statusConstants';
 import GlobalStyles from './styles/globalStyles';
 import { INDESTRUCTIBLE } from './constants/optionsConstants';
+import {getNextPieceFromServer} from './helpers/SocketOn';
+import GlobalFonts from './fonts/Fonts';
 
 const theme = {
   mainColor: '#F2A640',
@@ -28,7 +30,7 @@ const initialState = {
   piece: null,
   shadowPiece: null,
   nextPiece: null,
-  speed: 10000,
+  speed: 1000,
   hasToFall: false,
   volume: 0.01,
   isAdmin: false,
@@ -56,6 +58,7 @@ const store = createStore(
 ReactDom.render((
   <React.Fragment>
     <ThemeProvider theme={theme}>
+      <GlobalFonts />
       <GlobalStyles />
       <Provider store={store}>
         <Main />

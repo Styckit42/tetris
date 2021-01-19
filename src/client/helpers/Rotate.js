@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import * as r from '../constants/rotateConstants';
 
-let rotate = (piece) => {
+export const rotate = (piece) => {
   const pieceTmp = _.cloneDeep(piece);
   const { type, state, bricks } = pieceTmp;
   const rotation = r[`ROTATE_${type}`][state];
@@ -21,7 +21,7 @@ let rotate = (piece) => {
   return pieceTmp;
 };
 
-let applyWallKick = (wallKick, piece) => {
+export const applyWallKick = (wallKick, piece) => {
   const { bricks } = piece;
   for (let i = 0; i < bricks.length; i++) {
     bricks[i].x += wallKick.x;
@@ -29,10 +29,3 @@ let applyWallKick = (wallKick, piece) => {
   }
   return piece;
 };
-
-const exportFunctions = {
-  rotate,
-  applyWallKick,
-};
-
-export default exportFunctions;

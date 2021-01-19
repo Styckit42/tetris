@@ -1,5 +1,6 @@
 import { START_BOARD, MULTI_WAITING, VICTORY, WRONG_URL } from '../constants/statusConstants';
-import PieceGenFuncs from './PieceGenerations';
+import { generatePiece } from './PieceGenerations';
+import { savePieceAction, saveNextPieceAction } from '../actions/save';
 
 export function checkIsAdmin(saveIsAdmin) {
   socket.on('sendIsAdmin', (sendIsAdmin) => {
@@ -9,27 +10,40 @@ export function checkIsAdmin(saveIsAdmin) {
 
 export function launchGame(saveGameState, savePiece, saveNextPiece, saveGameOptions, saveLevels) {
   socket.on('launchGame', ({ piece, nextPiece, gameOptions, blindOptions }) => {
-    savePiece(PieceGenFuncs.generatePiece(piece[0], blindOptions));
-    saveNextPiece(PieceGenFuncs.generatePiece(nextPiece[0], blindOptions));
+    savePiece(generatePiece(piece[0], blindOptions));
+    saveNextPiece(generatePiece(nextPiece[0], blindOptions));
     saveGameState(START_BOARD);
     saveGameOptions(gameOptions);
     saveLevels(gameOptions.levelStart);
   });
 }
 
-export function getNextPieceFromServer(savePiece, saveNextPiece) {
-  socket.on('getNextPieceFromServer', ({ piece, nextPiece, stackHigh, blindOptions }) => {
-    const pieceTmp = PieceGenFuncs.generatePiece(piece[0], blindOptions);
-    if (stackHigh === true) {
-      pieceTmp.bricks.forEach((brick) => {
-        brick.y -= 1;
+export function getNextPieceFromServer(stack, stackHigh, score) {
+  return function (dispatch) {
+    return new Promise((res) => {
+      socket.emit('increaseBagIndex', stack, stackHigh, score);
+      socket.on('getNextPieceFromServer', ({piece, nextPiece, stackHigh, blindOptions}) => {
+        const pieceTmp = generatePiece(piece[0], blindOptions);
+        if (stackHigh === true) {
+          console.error(pieceTmp.bricks);
+          pieceTmp.bricks.forEach((brick) => {
+            brick.y -= 1;
+          });
+          console.error(pieceTmp.bricks);
+        }
+        res({
+          piece: pieceTmp,
+          nextPiece: generatePiece(nextPiece[0], blindOptions),
+        });
       });
-      savePiece(pieceTmp);
-    } else {
-      savePiece(pieceTmp);
-    }
-    saveNextPiece(PieceGenFuncs.generatePiece(nextPiece[0], blindOptions));
-  });
+    }).then(
+      (res) => {
+        socket.off('getNextPieceFromServer');
+        console.error(res);
+        dispatch(savePieceAction(res.piece));
+        dispatch(saveNextPieceAction(res.nextPiece));
+      });
+  }
 }
 
 export function updatePlayerSpectre(saveOpponentList) {

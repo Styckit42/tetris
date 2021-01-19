@@ -1,14 +1,14 @@
 import React from 'react';
 import Brick from './Brick';
-import MovementsFuncs from '../helpers/Movements';
+import { calculateOrder } from '../helpers/Movements';
 
-const Piece = ({ bricks, width }) => {
+const Piece = ({ bricks, width, isShadow }) => {
   const piece = bricks.map(
     (brick) => {
       const { x, y } = brick;
       if (y >= 0) {
-        const order = MovementsFuncs.calculateOrder(x, y, width);
-        return (<Brick brick={brick} key={order} />);
+        const order = calculateOrder(x, y, width);
+        return (<Brick brick={brick} key={order} isShadow={isShadow} />);
       }
       return false;
     },

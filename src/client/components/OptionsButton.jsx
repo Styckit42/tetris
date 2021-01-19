@@ -20,7 +20,7 @@ const StyledOptionsButton = styled.button`
 `;
 
 const saveOptions = (props) => {
-  props.saveGameOptions({...props.gameOptions, [props.type]: props.value});
+  props.saveGameOptions({ ...props.gameOptions, [props.type]: props.value });
 };
 
 const OptionsButton = (props) => {

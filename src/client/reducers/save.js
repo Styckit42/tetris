@@ -92,6 +92,7 @@ const reducer = (state = {}, action) => {
         levels,
         linesErased: 0,
         piece: null,
+        shadowPiece: null,
         nextPiece: null,
         speed: 1000,
         hasToFall: false,

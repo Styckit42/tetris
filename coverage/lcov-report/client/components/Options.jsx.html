@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -89,78 +89,96 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
-import { connect } from 'react-redux';
+import styled from 'styled-components';
+import Button from './Button';
+import OptionsButton from './OptionsButton';
+import { IN_MENU } from '../constants/statusConstants';
+import {
+  OPTIONS_GAME_TYPE, OPTIONS_LEVEL_START,
+  OPTIONS_COLOR_BLIND, DESTRUCTIBLE, INDESTRUCTIBLE,
+  NO_LINES,
+} from '../constants/optionsConstants';
 &nbsp;
-export const Options = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  return (</span>
+const StyledOptions = styled.button`
+`;
+&nbsp;
+export const Options = () =&gt; (
+  &lt;StyledOptions&gt;
     &lt;div&gt;
-      &lt;Button label="Start Solo game" action={IN_SOLO} /&gt;
-      &lt;Button label="Start Multiplayer game" action={IN_MULTI} /&gt;
-      &lt;Button label="Show Best Score" action={BEST_SCORE} /&gt;
-      &lt;Button label="Options" action={IN_OPTIONS} /&gt;
+      &lt;h1&gt;Niveau de départ (plus le niveau est haut, plus la pièce tombe vite)&lt;/h1&gt;
+      &lt;OptionsButton label="1" type={OPTIONS_LEVEL_START} value={1} /&gt;
+      &lt;OptionsButton label="6" type={OPTIONS_LEVEL_START} value={6} /&gt;
+      &lt;OptionsButton label="11" type={OPTIONS_LEVEL_START} value={11} /&gt;
     &lt;/div&gt;
-  )
-}
+    &lt;div&gt;
+      &lt;h1&gt;Mode daltonien&lt;/h1&gt;
+      &lt;OptionsButton label="activé" type={OPTIONS_COLOR_BLIND} value /&gt;
+      &lt;OptionsButton label="désactivé" type={OPTIONS_COLOR_BLIND} value={false} /&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;h1&gt;Multijoueurs: type de partie&lt;/h1&gt;
+      &lt;OptionsButton label="Sans ajout de lignes" type={OPTIONS_GAME_TYPE} value={NO_LINES} /&gt;
+      &lt;OptionsButton label="Ajout de lignes destructibles" type={OPTIONS_GAME_TYPE} value={DESTRUCTIBLE} /&gt;
+      &lt;OptionsButton label="Ajout de lignes indestructibles" type={OPTIONS_GAME_TYPE} value={INDESTRUCTIBLE} /&gt;
+    &lt;/div&gt;
+    &lt;Button label="Retourner au menu principal" action={IN_MENU} /&gt;
+  &lt;/StyledOptions&gt;
+);
 &nbsp;
-const mapStateToProps = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(s</span>tate) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
-  gameState: state.gameState,
-  speed: state.speed,
-  volume: state.volume,
-});
-&nbsp;
-const mapDispatchToProps = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(d</span>ispatch) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
-  saveGameState: <span class="fstat-no" title="function not covered" >(g</span>ameState) =&gt; {
-<span class="cstat-no" title="statement not covered" >    dispatch(saveGameStateAction(gameState));</span>
-  },
-  resetState: <span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >    dispatch(resetStateAction());</span>
-  },
-  saveSpeed: <span class="fstat-no" title="function not covered" >(s</span>peed) =&gt; {
-<span class="cstat-no" title="statement not covered" >    dispatch(saveSpeedAction(speed));</span>
-  },
-});
-&nbsp;
-export default connect(mapStateToProps, mapDispatchToProps)(Options)</pre></td></tr></table></pre>
+export default Options;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Sep 03 2020 21:08:42 GMT+0200 (heure d’été d’Europe centrale)
+                at Mon Nov 23 2020 17:51:48 GMT+0100 (heure normale d’Europe centrale)
             </div>
         </div>
         <script src="../../prettify.js"></script>

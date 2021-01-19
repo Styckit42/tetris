@@ -15,7 +15,7 @@ const StyledScoreLine = styled.div`
   }
   & > span{
     font-weight: 600;
-    color: ${props => props.theme.mainColor};
+    color: ${(props) => props.theme.mainColor};
   }
 `;
 
@@ -26,19 +26,19 @@ const Score = (props) => {
   return (
     <StyledScoreBox>
       <StyledScoreLine>
-        Score: 
+        Score:
         <span>{score}</span>
       </StyledScoreLine>
       <StyledScoreLine>
-        Level: 
+        Level:
         <span>{levels}</span>
       </StyledScoreLine>
       <StyledScoreLine>
-        LinesErased: 
+        LinesErased:
         <span>{linesErased}</span>
       </StyledScoreLine>
       <StyledScoreLine>
-        Speed: 
+        Speed:
         <span>{speed}</span>
       </StyledScoreLine>
     </StyledScoreBox>

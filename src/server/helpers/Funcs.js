@@ -48,7 +48,7 @@ export const giveLinesIndestructible = (linesErased, opponentList, currentGame, 
   }
 };
 
-const randomHole = (width) => Math.floor(Math.random() * Math.floor(width));
+export const randomHole = (width) => Math.floor(Math.random() * Math.floor(width));
 
 export const giveLinesDestructibles = (linesErased, opponentList, currentGame, socket) => {
   for (let i = 0; i < opponentList.length; i++) {

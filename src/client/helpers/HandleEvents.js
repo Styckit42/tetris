@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import LineFuncs from './Line';
-import MovementsFuncs from './Movements';
-import RotateFuncs from './Rotate';
+import { eraseLineCheck } from './Line';
+import { collisionTest, move } from './Movements';
+import { rotate, applyWallKick } from './Rotate';
 import {
   LEFT, RIGHT, UP, DOWN, SPACE, /* ESC , */
 } from '../constants/keyBoardConstants';
@@ -9,19 +9,19 @@ import { COLLISION_STACK, COLLISION_WALL, NO_COLLISION } from '../constants/coll
 import { I } from '../constants/piecesConstants';
 import { WALLKICK_DEFAULT, WALLKICK_I } from '../constants/rotateConstants';
 import { GAME_OVER } from '../constants/statusConstants';
-import GameOverFuncs from './GameOver';
+import { gameOverCheck, isStackHigh } from './GameOver';
 import { increaseNextPieceIndex, giveLinesToOpponents } from './SocketEmit';
 import {saveShadowPieceAction} from "../actions/save";
 
 const handleRotate = (props, width, height) => {
   const { piece, stack, savePiece, saveShadowPiece } = props;
   let pieceTmp = _.cloneDeep(piece);
-  pieceTmp = RotateFuncs.rotate(pieceTmp);
+  pieceTmp = rotate(pieceTmp);
   const wallKick = (pieceTmp.type === I) ? WALLKICK_I[piece.state] : WALLKICK_DEFAULT[piece.state];
   for (let i = 0; i < wallKick.length; i++) {
     const element = wallKick[i];
-    pieceTmp = RotateFuncs.applyWallKick(element, pieceTmp);
-    const collision = MovementsFuncs.collisionTest(pieceTmp.bricks, stack, width, height);
+    pieceTmp = applyWallKick(element, pieceTmp);
+    const collision = collisionTest(pieceTmp.bricks, stack, width, height);
     if (collision === NO_COLLISION) {
       savePiece(pieceTmp);
       saveShadowPiece(null);
@@ -36,29 +36,29 @@ const handleMove = (keyCode, props, width, height, piece) => {
     levels, linesErased, saveGameState,
     savePiece, saveStack, saveScore, saveLevels,
     saveLinesErased, saveSpeed, linesBeingErased,
-    saveLinesBeingErased, saveShadowPiece,
+    saveLinesBeingErased, saveShadowPiece, getNextPieceFromServer,
   } = props;
   if (piece === null) {
     return false;
   }
   const pieceTmp = _.cloneDeep(piece);
-  pieceTmp.bricks = MovementsFuncs.move(piece.bricks, keyCode, stack);
-  const collision = MovementsFuncs.collisionTest(pieceTmp.bricks, stack, width, height, keyCode);
+  pieceTmp.bricks = move(piece.bricks, keyCode, stack);
+  const collision = collisionTest(pieceTmp.bricks, stack, width, height, keyCode);
   switch (collision) {
     case COLLISION_STACK:
-      if (GameOverFuncs.gameOverCheck(piece.bricks, stack)) {
+      if (gameOverCheck(piece.bricks)) {
         saveGameState(GAME_OVER);
         return false;
       }
       let stackTmp = [...stack, ...piece.bricks];
-      stackTmp = LineFuncs.eraseLineCheck(piece.bricks, stackTmp, score, saveScore,
+      stackTmp = eraseLineCheck(piece.bricks, stackTmp, score, saveScore,
         levels, linesErased, saveLevels, saveLinesErased, saveSpeed,
         saveLinesBeingErased, opponentList, width, height);
       savePiece(null);
       saveShadowPiece(null);
       saveStack(stackTmp);
-      const stackHigh = GameOverFuncs.isStackHigh(stackTmp);
-      increaseNextPieceIndex(stackTmp, stackHigh, score);
+      const stackHigh = isStackHigh(stackTmp);
+      getNextPieceFromServer(stackTmp, stackHigh, score);
       return false;
     case COLLISION_WALL:
       return false;
@@ -80,7 +80,6 @@ const handleOnKeyDown = ({ keyCode }, props, width, height) => {
     }
   } else if (keyCode === LEFT || keyCode === RIGHT || keyCode === DOWN) {
     handleMove(keyCode, props, width, height, props.piece);
-
   } else if (keyCode === UP) {
     handleRotate(props, width, height);
   } /* else if (keyCode === ESC) {

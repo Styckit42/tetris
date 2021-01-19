@@ -6,10 +6,6 @@ export function tellServerToStartGame(gameType) {
   socket.emit('startGame', gameType);
 }
 
-export function refillBag() {
-  socket.emit('refillNextPiece');
-}
-
 export function increaseNextPieceIndex(stack, stackHigh, score) {
   socket.emit('increaseBagIndex', stack, stackHigh, score);
 }

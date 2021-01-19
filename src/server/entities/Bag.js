@@ -3,7 +3,7 @@ import {
 } from '../constants/piecesConstants.js';
 
 export default class Bag {
-  constructor(gameId, playerList) {
+  constructor(gameId) {
     this.gameId = gameId;
     this.mainBag = [];
     this.mainBag = this.fillBag();

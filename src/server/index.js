@@ -19,6 +19,20 @@ app.get('/build/bundle.js', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/../../build/client.js'));
 });
 
+app.get('/sounds/tetris-theme.mp3', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/../../sounds/tetris-theme.mp3'));
+});
+
+app.get('/fonts/:font', (req, res) => {
+  const font = req.params.font;
+  res.sendFile(path.resolve(__dirname + `./../client/fonts/${font}`));
+});
+
+app.get('/images/:image', (req, res) => {
+  const image = req.params.image;
+  res.sendFile(path.resolve(__dirname + `./../client/images/${image}`));
+});
+
 const isGameExists = (id) => {
   for (let i = 0; i < gamesList.length; i++) {
     if (gamesList[i].getId() === id) {
@@ -55,7 +69,6 @@ io.on('connection', (socket) => {
     updateOpponentList(socket, currentGame, player);
     increaseBagIndex(socket, player, currentGame);
     socket.nsp.to(player.id).emit('sendIsAdmin', player.admin);
-    refillBag(socket, player, currentGame);
     giveLinesToOpponents(socket, player, currentGame);
     playerHasLoose(socket, currentGame);
     resetServerState(socket, currentGame);

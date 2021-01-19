@@ -22,7 +22,6 @@ const Socket = ({
   onClientLoad();
   checkIsAdmin(saveIsAdmin);
   launchGame(saveGameState, savePiece, saveNextPiece, saveGameOptions, saveLevels, saveShadowPiece);
-  getNextPieceFromServer(savePiece, saveNextPiece);
   updatePlayerSpectre(saveOpponentList);
   linesFromOtherPlayers(saveStack, savePieceAfterChange);
   updateOpponentList(saveOpponentList);

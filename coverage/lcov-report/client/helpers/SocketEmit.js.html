@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">42.86% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>3/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>3/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">42.86% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>3/7</span>
             </div>
         
             
@@ -75,8 +75,15 @@
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -88,37 +95,51 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export function <span class="fstat-no" title="function not covered" >onClientLoad(</span>) {
-<span class="cstat-no" title="statement not covered" >  socket.emit('onClientLoad');</span>
-};
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export function onClientLoad() {
+  socket.emit('onClientLoad', window.location.hash);
+}
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >startGameMulti(</span>) {
-<span class="cstat-no" title="statement not covered" >  socket.emit('startGameMulti');</span>
-};
-&nbsp;
-export function <span class="fstat-no" title="function not covered" >refillBag(</span>) {
-<span class="cstat-no" title="statement not covered" >  socket.emit('refillNextPiece');</span>
-};
+export function <span class="fstat-no" title="function not covered" >tellServerToStartGame(</span>gameType) {
+<span class="cstat-no" title="statement not covered" >  socket.emit('startGame', gameType);</span>
+}
 &nbsp;
 export function <span class="fstat-no" title="function not covered" >increaseNextPieceIndex(</span>stack, stackHigh, score) {
 <span class="cstat-no" title="statement not covered" >  socket.emit('increaseBagIndex', stack, stackHigh, score);</span>
-};
+}
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >giveLinesToOpponents(</span>linesErased, opponentList) {
-<span class="cstat-no" title="statement not covered" >  socket.emit('giveLinesToOpponents', linesErased, opponentList);</span>
-};</pre></td></tr></table></pre>
+export function giveLinesToOpponents(linesErased, opponentList, piece) {
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (linesErased &gt; 1) {
+<span class="cstat-no" title="statement not covered" >    socket.emit('giveLinesToOpponents', linesErased - 1, opponentList, piece);</span>
+  }
+}
+&nbsp;
+export function tellServerPlayerHasLoose(id) {
+  socket.emit('playerHasLoose', id);
+}
+&nbsp;
+export function <span class="fstat-no" title="function not covered" >resetServerState(</span>) {
+<span class="cstat-no" title="statement not covered" >  socket.emit('resetServerState');</span>
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Sep 03 2020 21:08:42 GMT+0200 (heure d’été d’Europe centrale)
+                at Mon Nov 23 2020 17:51:48 GMT+0100 (heure normale d’Europe centrale)
             </div>
         </div>
         <script src="../../prettify.js"></script>

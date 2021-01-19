@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import functional from 'react-functional';
-import Sound from 'react-sound';
 import styled, { css, keyframes } from 'styled-components';
 import Piece from './Piece';
 import Score from './Score';
@@ -12,10 +11,11 @@ import {
   saveLinesBeingErasedAction, saveShadowPieceAction,
 } from '../actions/save';
 import handleOnKeyDown from '../helpers/HandleEvents';
-import BoardGenFuncs from '../helpers/BoardGeneration';
-import LineFuncs from '../helpers/Line';
-import PieceGenFuncs from '../helpers/PieceGenerations';
+import { generateBoard, filterBoard } from '../helpers/BoardGeneration';
+import { speedUp } from '../helpers/Line';
+import { defineShadowPiece } from '../helpers/PieceGenerations';
 import NextPiece from './NextPiece';
+import { getNextPieceFromServer } from '../helpers/SocketOn';
 
 const shakeOneLine = keyframes`
   0% {
@@ -151,11 +151,11 @@ const StyledBoard = styled.div`
 
 const Board = (props) => {
   const {
-    piece, stack, width, height, levels, saveSpeed, shadowPiece, saveShadowPiece,
+    piece, stack, width, height, levels, saveSpeed, shadowPiece, saveShadowPiece, saveGameState,
   } = props;
-  PieceGenFuncs.defineShadowPiece(piece, shadowPiece, stack, saveShadowPiece, width, height);
+  defineShadowPiece(piece, shadowPiece, stack, saveShadowPiece, width, height);
   if (levels > 1) {
-    LineFuncs.speedUp(levels, saveSpeed);
+    speedUp(levels, saveSpeed);
   }
   let testPiece = [];
   if (piece !== null) {
@@ -165,16 +165,16 @@ const Board = (props) => {
   if (shadowPiece !== null) {
     testShadow = shadowPiece.bricks;
   }
-  const board = BoardGenFuncs.generateBoard(width, height);
-  let boardFiltered = BoardGenFuncs.filterBoard(board, testPiece, stack);
-  boardFiltered = BoardGenFuncs.filterBoard(boardFiltered, testShadow, stack);
+  const board = generateBoard(width, height);
+  let boardFiltered = filterBoard(board, testPiece, stack);
+  boardFiltered = filterBoard(boardFiltered, testShadow, stack);
   return (
-    <StyledWrapper linesBeingErased={props.linesBeingErased } tabIndex="0" onKeyUp={(e) => { handleOnKeyDown(e, props, width, height); }}>
+    <StyledWrapper linesBeingErased={props.linesBeingErased} tabIndex="0" onKeyUp={(e) => { handleOnKeyDown(e, props, width, height); }}>
       <StyledBoard>
         <Piece bricks={boardFiltered} width={width} />
         <Piece bricks={testPiece} width={width} />
         <Piece bricks={stack} width={width} />
-        <Piece bricks={testShadow} width={width} />
+        <Piece bricks={testShadow} width={width} isShadow />
       </StyledBoard>
       <div className="boxScore">
         <Score />
@@ -261,6 +261,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   saveShadowPiece: (shadowPiece) => {
     dispatch(saveShadowPieceAction(shadowPiece));
+  },
+  getNextPieceFromServer: (stack, stackHigh, score) => {
+    dispatch(getNextPieceFromServer(stack, stackHigh, score));
   },
 });
 

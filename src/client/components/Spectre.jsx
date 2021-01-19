@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Piece from './Piece';
-import BoardGenFuncs from '../helpers/BoardGeneration';
+import { calculateSpectreStack, generateBoard, filterBoard } from '../helpers/BoardGeneration';
 
 const StyledBoard = styled.div`
   display: flex;
@@ -17,10 +17,10 @@ const height = 20;
 const Spectre = (props) => {
   const { name, stack, score } = props;
   if (stack !== null) {
-    const spectreStack = BoardGenFuncs.calculateSpectreStack(stack, width, height);
+    const spectreStack = calculateSpectreStack(stack, width, height);
     const test = [];
-    const board = BoardGenFuncs.generateBoard(width, height);
-    const boardFiltered = BoardGenFuncs.filterBoard(board, test, spectreStack);
+    const board = generateBoard(width, height);
+    const boardFiltered = filterBoard(board, test, spectreStack);
     return (
       <StyledBoard>
         {name}
