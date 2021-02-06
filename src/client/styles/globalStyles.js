@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyles = createGlobalStyle`
    body {
     font-size : 10px;
-    font-family: roadRage;
+    font-family: futuraMedium;
     background-color: ${props => props.theme.darkColor};
     color: #fff;
     margin: 0;

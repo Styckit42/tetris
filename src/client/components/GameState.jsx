@@ -15,7 +15,7 @@ import tetrisMusic from '../sounds/tetris-theme.mp3';
 import MultiWaiting from './MultiWaiting';
 import Victory from './Victory';
 import WrongInfo from './WrongInfo';
-import { Options } from './Options';
+import Options from './Options';
 import { resetStateAction } from '../actions/save';
 import { tellServerToStartGame, resetServerState } from '../helpers/SocketEmit';
 import Music from './Music';

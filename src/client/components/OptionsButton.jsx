@@ -4,19 +4,17 @@ import styled from 'styled-components';
 import { saveGameOptionsAction } from '../actions/options';
 
 const StyledOptionsButton = styled.button`
-  background: none;
-  border: 0;
-  color: inherit;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  width: 30%;
-  margin-left: 35%;
+  width: 320px;
   height: 40px;
+  margin: 20px auto 0 auto;
+  background-color: ${props => props.isActive ? 'rgba(255, 20, 155, 1)' : '#fff'};
+  border: 0;
+  color: ${props => props.isActive ? '#fff' : props.theme.darkColor};
   text-align: center;
-  border-style: solid;
-  border-width: 2px;
-  margin-top: 20px;
-  line-height: 36px;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
 `;
 
 const saveOptions = (props) => {
@@ -24,9 +22,9 @@ const saveOptions = (props) => {
 };
 
 const OptionsButton = (props) => {
-  const { label } = props;
+  const { label, isActive } = props;
   return (
-    <StyledOptionsButton type="button" onClick={() => saveOptions(props)}>
+    <StyledOptionsButton type="button" isActive={isActive} onClick={() => saveOptions(props)}>
       {label}
     </StyledOptionsButton>
   );

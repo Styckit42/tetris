@@ -25,6 +25,7 @@ app.get('/sounds/tetris-theme.mp3', (req, res) => {
 
 app.get('/fonts/:font', (req, res) => {
   const font = req.params.font;
+  res.set('Cache-control', 'public, max-age=300');
   res.sendFile(path.resolve(__dirname + `./../client/fonts/${font}`));
 });
 

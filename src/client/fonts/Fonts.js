@@ -31,4 +31,10 @@ export default createGlobalStyle`
         font-weight: 300;
         font-style: normal;
    }
+   @font-face {
+        font-family: 'miami';
+        src: url('/fonts/Miami.ttf') format('ttf');
+        font-weight: 300;
+        font-style: normal;
+   }
 `;

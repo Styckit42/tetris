@@ -8,7 +8,7 @@ import Button from './Button';
 import OpponentList from './OpponentList';
 
 const StyledMenu = styled.div`
-  font-family: 'futuraMedium';
+  font-family: 'pepsi';
   padding-top: 50px;
   h1 {
     margin: 0;
@@ -22,6 +22,9 @@ const StyledMenu = styled.div`
     }
   }
   h2 {
+    text-align: center;
+  }
+  p {
     text-align: center;
   }
 `;
@@ -43,14 +46,13 @@ const Menu = ({ isAdmin, name }) => {
     );
   }
   return (
-    <div>
+    <StyledMenu>
       <h1>
-        Bienvenue
-        {name}
+        Bienvenue {name}
       </h1>
       <p>Veuillez attendre que le propriétaire du salon lance la prochaine partie</p>
       <OpponentList />
-    </div>
+    </StyledMenu>
   );
 };
 
