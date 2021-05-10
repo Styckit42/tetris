@@ -24,7 +24,7 @@
     "fs": "0.0.1-security",
     "jest": "^26.3.0",
     "jest-styled-components": "^7.0.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "net": "^1.0.2",
     "react": "^16.8.6",
     "react-audio-player": "^0.14.0",
